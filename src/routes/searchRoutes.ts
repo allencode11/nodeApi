@@ -1,12 +1,11 @@
 import express from 'express';
 import { Search } from '../controllers';
 
-const router = express.Router();
+export const searchRouter = express.Router();
 
-router.route('/search')
-    .get(Search.getSkills)
-    .delete(Search.deleteSkill)
-    .patch(Search.editSkill)
-    .post(Search.addSkills);
-
-export default router;
+searchRouter
+  .get('/', Search.find)
+  .get('/:id', Search.getSkills)
+  .delete('/:id', Search.deleteSkill)
+  .patch('/:id', Search.editSkill)
+  .post('/:id', Search.addSkills);
