@@ -1,8 +1,8 @@
-import { User } from '../repositories';
+import { Skill } from '../repositories';
 import { DataTypes, Sequelize } from 'sequelize';
 
-export function setupSkillModel(sequelize: Sequelize) : typeof User {
-    User.init({
+export function setupSkillModel(sequelize: Sequelize) : typeof Skill {
+    Skill.init({
         id: { 
             type: DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,
@@ -20,9 +20,9 @@ export function setupSkillModel(sequelize: Sequelize) : typeof User {
     },
     {
         sequelize,
-        modelName: 'Skill',
+        modelName: 'skills',
         tableName: 'skills',
     });
     
-    return User;
+    return Skill;
 }

@@ -15,8 +15,8 @@ export function setupCategoryModel(sequelize: Sequelize) : typeof Category {
     },
     {
         sequelize,
-        modelName: 'Category',
-        tableName: 'category',
+        modelName: 'categories',
+        tableName: 'categories',
     });
     
     return Category;

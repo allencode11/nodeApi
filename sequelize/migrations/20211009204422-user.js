@@ -32,7 +32,7 @@ module.exports = {
       role: {
         type: DataTypes.STRING,
         allowNull: true,
-        default: 'clent',
+        default: 'client',
       }
     });
   },

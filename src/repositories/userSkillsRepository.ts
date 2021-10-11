@@ -13,4 +13,15 @@ export class UserSkills extends Model {
       attributes: ['id', 'name'],
     });
   }
+
+  public static async getSkillsByUserId(id: number[]): Promise<any[]> {
+    console.log(id)
+    return this.findAll({
+      raw: true,
+      where: {
+        userId: id,
+      },
+      attributes: ['skillId'],
+    })
+  }
 }

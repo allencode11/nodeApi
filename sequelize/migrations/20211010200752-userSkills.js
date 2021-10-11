@@ -4,7 +4,7 @@ const { DataTypes } = require ('sequelize');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('userSkills', {
-      user_id: { 
+      userId: { 
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
       },

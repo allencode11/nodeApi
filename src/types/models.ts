@@ -1,5 +1,4 @@
 export interface ICategoryData {
-  id: number,
   name: string,
 }
 
@@ -12,4 +11,11 @@ export interface ISkillsData {
   categoryId: number,
   name: string,
 }
-  
+
+export interface IUserData {
+  firstName: string,
+  lastName: string,
+  email: string,
+  avatar: string,
+  description:string,
+}
