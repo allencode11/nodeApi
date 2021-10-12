@@ -1,11 +1,13 @@
 import { Model } from 'sequelize';
-import { ICategoryData } from '../types';
+import { ICategoryData, ICategory } from '../types';
 
 
 export class Category extends Model {
   public id!: number;
   
   public name!: string;
+  
+  public createdAt: Date
 
   public static async getAll(): Promise<ICategoryData[]> {
     return this.findAll({
@@ -14,31 +16,22 @@ export class Category extends Model {
     });
   };
 
-  public static async delete(name: string): Promise<ICategoryData[]> {
-    await this.destroy({ where: { name } });
-
-    return await this.findAll({
-      raw: true,
-      attributes: ['id', 'name'],
-    });
+  public static async get(name: string): Promise<ICategory> {
+  return this.findByPk(name);
   };
 
-  public static async put(nameObj: ICategoryData, id: number): Promise<ICategoryData[]> {
-    
-    await this.update({ name: nameObj }, { where: { id } })
-    
-    return await this.findAll({
-      raw: true,
-      attributes: ['id', 'name'],
-    });
+  public static async delete(name: string): Promise<number> {
+
+    return this.destroy({ where: { name } });
   };
 
-  public static async post(nameObj: ICategoryData): Promise<ICategoryData[]> {
-    await this.create({ name: nameObj });
+  public static async put(nameObj: string, id: number): Promise<any> {
+    
+    return this.update({ name: nameObj }, { where: { id } });
+  };
 
-    return await this.findAll({
-      raw: true,
-      attributes: ['id', 'name'],
-    });
+  public static async post(nameObj: string): Promise<ICategory> {
+    
+    return this.create({ name: nameObj });
   };
 }

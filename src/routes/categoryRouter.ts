@@ -4,8 +4,7 @@ import { Categories } from '../controllers';
 export const categoryRouter = express.Router();
 
 categoryRouter  
-  .get('/', Categories.getAllCategories)
-  .get('/:name', Categories.getAll)
-  .delete('/:id', Categories.delete)
-  .patch('/:id', Categories.put)
-  .post('/:id', Categories.add);
+  .get('/', Categories.getAll)
+  .delete('/:name', Categories.delete)
+  .patch('/:name', Categories.put)
+  .post('/', Categories.add);

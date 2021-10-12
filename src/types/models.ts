@@ -2,6 +2,11 @@ export interface ICategoryData {
   name: string,
 }
 
+export interface ICategory {
+  name: string,
+  id: number,
+}
+
 export interface IUserSkillsData {
   userId: number,
   skillId: number,

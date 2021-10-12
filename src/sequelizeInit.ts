@@ -1,5 +1,5 @@
 // tslint:disable-next-line: no-var-requires
-import { Config } from '../config/default';
+const Config = require('../config/default');
 import { Sequelize, Dialect } from 'sequelize';
 import { setupCategoryModel, setupSkillModel, setupUserModel } from './models';
 

@@ -33,6 +33,14 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: true,
         default: 'client',
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        field: 'updated_at'
       }
     });
   },
