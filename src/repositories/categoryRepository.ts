@@ -1,6 +1,10 @@
 import { Model } from 'sequelize';
 import { ICategoryData, ICategory } from '../types';
 
+type Params = {
+  limit: number;
+  offset: number;
+}
 
 export class Category extends Model {
   public id!: number;
@@ -9,12 +13,16 @@ export class Category extends Model {
   
   public createdAt: Date
 
-  public static async getAll(): Promise<ICategoryData[]> {
-    return this.findAll({
+  public static async getAllPaginated(params: Params): Promise<{ rows: Category[], count: number }> {
+    const { limit, offset } = params;
+
+    return this.findAndCountAll({
       raw: true,
-      attributes: ['id', 'name'],
+      offset,
+      limit,
+      order: ['id', 'asc'],
     });
-  };
+  }
 
   public static async get(name: string): Promise<ICategory> {
   return this.findByPk(name);

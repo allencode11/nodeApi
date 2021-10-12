@@ -4,16 +4,16 @@ import { Category, User, Skill } from '../repositories';
 
 export class Search {
     public static async find(req: Request, res: Response): Promise<any> {
-        // const users = await User.getAllUsers();
+        const users = await User.get();
 
-        // const ids = users.map((user) => user.id);
+        const ids = users.map((user) => user.id);
         
-        // const skillsId = await UserSkills.getSkillsByUserId(ids);
+        const skillsId = await UserSkills.getSkillsByUserId(ids);
 
-        // return res.json({
-        //     ...users,
-        //     skills: [...(await Skill.getAllByIds(skillsId))],
-        // });
+        return res.json({
+            ...users,
+            skills: [...(await Skill.getAllByIds(skillsId))],
+        });
         throw new Error('Method not implemented yet'); 
     }
 

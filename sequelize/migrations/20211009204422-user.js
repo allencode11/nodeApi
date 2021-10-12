@@ -32,15 +32,17 @@ module.exports = {
       role: {
         type: DataTypes.STRING,
         allowNull: true,
-        default: 'client',
+        defaultValue: 'client',
       },
       createdAt: {
         type: Sequelize.DATE,
         field: 'created_at',
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
         type: Sequelize.DATE,
-        field: 'updated_at'
+        field: 'updated_at',
+        defaultValue: Sequelize.NOW,
       }
     });
   },
