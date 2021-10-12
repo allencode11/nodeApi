@@ -46,9 +46,9 @@ export class Skill extends Model {
     return 0
   };
 
-  public static async editSkill(obj: ISkillsData, id: number): Promise<ISkillsData[]> {
-    const response = await this.update({ name: obj.name, categoryId: obj.categoryId}, { where: { id } } );
+  public static async editSkill(obj: ISkillsData, id: number): Promise<void> {
+    // const response = this.update({ name: obj.name, categoryId: obj.categoryId}, { where: { id } } );
     
-    return response.;
+    // return response;
   }
 }

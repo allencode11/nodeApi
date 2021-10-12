@@ -1,8 +1,13 @@
 import { Request, Response } from 'express';
+import { Category } from '../repositories';
+import { ICategoryData } from '../types/models';
 
-export class Category {
-    public static async getAll(req: Request, res: Response): Promise<void> {
-        throw new Error('Method not implemented.');
+export class Categories {
+    public static async getAll(req: Request, res: Response): Promise<any> {
+        
+        const response = await Category.getAll();
+
+        return res.json(response);
     };
     public static async getAllCategories() {
         throw new Error('Method not implemented.');

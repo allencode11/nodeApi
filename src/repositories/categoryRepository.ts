@@ -8,7 +8,7 @@ export class Category extends Model {
   public name!: string;
 
   public static async getAll(): Promise<ICategoryData[]> {
-    return await this.findAll({
+    return this.findAll({
       raw: true,
       attributes: ['id', 'name'],
     });

@@ -1,11 +1,11 @@
 import express from 'express';
-import { Category } from '../controllers';
+import { Categories } from '../controllers';
 
 export const categoryRouter = express.Router();
 
 categoryRouter  
-  .get('/', Category.getAllCategories)
-  .get('/:name', Category.getAll)
-  .delete('/:id', Category.delete)
-  .patch('/:id', Category.put)
-  .post('/:id', Category.add);
+  .get('/', Categories.getAllCategories)
+  .get('/:name', Categories.getAll)
+  .delete('/:id', Categories.delete)
+  .patch('/:id', Categories.put)
+  .post('/:id', Categories.add);
