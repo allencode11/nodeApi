@@ -1,17 +1,14 @@
 import { Model } from 'sequelize';
-import { ICategoryData, ICategory } from '../types';
-
-type Params = {
-  limit: number;
-  offset: number;
-}
+import { ICategory, Params } from '../types';
 
 export class Category extends Model {
   public id!: number;
   
   public name!: string;
   
-  public createdAt: Date
+  public readonly createdAt!: Date;
+
+  public readonly updatedAt!: Date;
 
   public static async getAllPaginated(params: Params): Promise<{ rows: Category[], count: number }> {
     const { limit, offset } = params;
@@ -20,12 +17,17 @@ export class Category extends Model {
       raw: true,
       offset,
       limit,
-      order: ['id', 'asc'],
+      order: [['id', 'asc']],
     });
   }
 
-  public static async get(name: string): Promise<ICategory> {
-  return this.findByPk(name);
+  public static async get(name: string): Promise<Category> {
+    return this.findOne({
+      raw: true,
+      where: { 
+        name,
+      },    
+    });
   };
 
   public static async delete(name: string): Promise<number> {
@@ -33,9 +35,10 @@ export class Category extends Model {
     return this.destroy({ where: { name } });
   };
 
-  public static async put(nameObj: string, id: number): Promise<any> {
+  public static async put(nameObj: string, id: number): Promise<[number, Category[]]> {
     
-    return this.update({ name: nameObj }, { where: { id } });
+    const temp = this.update({ name: nameObj }, { where: { id } });
+    return temp;
   };
 
   public static async post(nameObj: string): Promise<ICategory> {

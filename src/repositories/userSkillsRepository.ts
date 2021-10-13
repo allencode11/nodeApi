@@ -7,6 +7,10 @@ export class UserSkills extends Model {
   
   public skillId!: number;
 
+  public readonly createdAt!: Date;
+
+  public readonly updatedAt!: Date;
+  
   public static async getAll(): Promise<IUserSkillsData[]> {
     return this.findAll({
       raw: true,
@@ -14,14 +18,13 @@ export class UserSkills extends Model {
     });
   }
 
-  public static async getSkillsByUserId(id: number[]): Promise<any[]> {
-    console.log(id)
-    return this.findAll({
-      raw: true,
-      where: {
-        userId: id,
-      },
-      attributes: ['skillId'],
+  public static async getSkillsByUserId(id: number): Promise<number[]> {
+    const skillConection = await this.findAll({where: {userId: id}});
+    
+    const res: number[] = [];
+    skillConection.forEach(element => {
+      res.push(element.skillId);
     })
+    return res;
   }
 }

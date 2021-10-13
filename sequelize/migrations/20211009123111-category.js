@@ -16,12 +16,12 @@ module.exports = {
       createdAt: {
         type: Sequelize.DATE,
         field: 'created_at',
-        default: DataTypes.NOW,
+        defaultValue: DataTypes.NOW,
       },
       updatedAt: {
         type: Sequelize.DATE,
         field: 'updated_at',
-        default: DataTypes.NOW,
+        defaultValue: DataTypes.NOW,
       }
     });
   },

@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-import { authRouter, searchRouter, categoryRouter } from './routes';
+import { authRouter, userRouter, searchRouter, categoryRouter, skillRouter } from './routes';
 import { sequelizeClient } from './sequelizeInit';
 
 const app = express();
@@ -11,7 +11,9 @@ app.use(express.json());
 app.set('sequelizeClient', sequelizeClient);
 
 app.use('/search', searchRouter);
-app.use('/users', authRouter);
+app.use('/', authRouter);
 app.use('/category', categoryRouter);
+app.use('/skills', skillRouter);
+app.use('/users', userRouter);
 
 export default app;

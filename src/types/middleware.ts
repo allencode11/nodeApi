@@ -6,3 +6,12 @@ export type PaginatedRequest = Request & {
         offset: number;
     },
 };
+
+export type Params = {
+    limit: number;
+    offset: number;
+  };
+
+export type RequestParam = Request  & {
+    params : { id: number; };
+}

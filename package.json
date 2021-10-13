@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "run test",
-    "start": "tsc && node dist/src"
+    "start": "tsc && node dist"
   },
   "repository": {
     "type": "git",

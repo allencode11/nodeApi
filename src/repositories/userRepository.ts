@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-import { ISkillsData } from 'types';
+import { IUserData, Params } from '../types';
 
 export class User extends Model {
   public id!: number;
@@ -14,38 +14,35 @@ export class User extends Model {
   
   public avatar: string;
   
-  public static async getAllUsers(): Promise<any[]> {
-    return this.findAll({
-      raw: true,
-      attributes: ['id', 'firstName', 'lastName', 'description', 'email', 'avatar'],
-    });
-  };
+  public readonly createdAt!: Date;
 
-  public static async addUser(): Promise<any[]> {
-    return this.findAll({
-      raw: true,
-      attributes: ['name', 'categoryId'], // how to use category name
-    });
-  };
+  public readonly updatedAt!: Date;
+  
+  public static async getAllPaginated(params: Params): Promise<{ rows: User[], count: number }> {
+    const { limit, offset } = params;
 
-  public static async deleteUser(): Promise<any[]> {
-    return this.findAll({
+    return this.findAndCountAll({
       raw: true,
-      attributes: ['name', 'categoryId'], // how to use category name
-    });
-  };
-
-  public static async editUser(): Promise<any[]> {
-    return this.findAll({
-      raw: true,
-      attributes: ['name', 'categoryId'], // how to use category name
+      offset,
+      limit,
+      order: ['id', 'asc'],
     });
   }
 
-  public static async getUser(): Promise<any[]> {
-    return this.findAll({
-      raw: true,
-      attributes: ['name', 'categoryId'], // how to use category name
-    });
+  public static async addUser(obj: IUserData): Promise<User> {
+    return this.create(obj);
+  };
+  
+
+  public static async deleteUser(id: number): Promise<number> {
+    return this.destroy({ where: {id} });
+  };
+
+  public static async editUser(obj: IUserData, id: number): Promise<[number, User[]]> {
+    return this.update({ obj }, { where: {id} });
+  }
+
+  public static async getUser(id: number): Promise<User> {
+    return this.findByPk(id);
   }
 }
