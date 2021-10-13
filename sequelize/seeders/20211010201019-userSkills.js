@@ -5,23 +5,23 @@ module.exports = {
     await queryInterface.bulkInsert('userSkills', [
       {
         userId: 3,
-        skillId: 0,
+        skillId: 1,
+      },
+      {
+        userId: 3,
+        skillId: 1,
       },
       {
         userId: 4,
-        skillId: 1,
+        skillId: 0,
       },
       {
         userId: 4,
         skillId: 2,
       },
       {
-        userId: 5,
-        skillId: 3,
-      },
-      {
-        userId: 6,
-        skillId: 4,
+        userId: 4,
+        skillId: 2,
       }
     ], {});
   },

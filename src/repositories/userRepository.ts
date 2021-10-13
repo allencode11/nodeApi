@@ -25,7 +25,7 @@ export class User extends Model {
       raw: true,
       offset,
       limit,
-      order: ['id', 'asc'],
+      order: [['id', 'asc']],
     });
   }
 
@@ -43,6 +43,8 @@ export class User extends Model {
   }
 
   public static async getUser(id: number): Promise<User> {
-    return this.findByPk(id);
+    return this.findByPk(id, {
+      raw: true,
+    });
   }
 }

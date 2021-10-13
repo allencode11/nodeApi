@@ -19,12 +19,13 @@ export class UserSkills extends Model {
   }
 
   public static async getSkillsByUserId(id: number): Promise<number[]> {
-    const skillConection = await this.findAll({where: {userId: id}});
-    
-    const res: number[] = [];
-    skillConection.forEach(element => {
-      res.push(element.skillId);
-    })
-    return res;
+    const skillConection = await this.findAll({raw: true, where: {userId: id}});
+    console.log('xsxs', skillConection);
+
+    const arr: number[] = [];
+    // skillConection.forEach(element => {
+    //   arr.push(element.skillId);
+    // })
+    return arr;
   }
 }

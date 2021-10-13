@@ -12,6 +12,12 @@ export function setupCategoryModel(sequelize: Sequelize) : typeof Category {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        createdAt: {
+            type: DataTypes.DATE,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+        },
     },
     {
         sequelize,

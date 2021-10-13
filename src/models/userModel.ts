@@ -9,7 +9,7 @@ export function setupUserModel(sequelize: Sequelize) : typeof User {
             primaryKey: true,
             allowNull: false,
         },
-        firsNname: {
+        firstName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -28,10 +28,6 @@ export function setupUserModel(sequelize: Sequelize) : typeof User {
         avatar: {
             type: DataTypes.STRING,
             allowNull: true,
-        },
-        skiilsId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
         },
     },
     {

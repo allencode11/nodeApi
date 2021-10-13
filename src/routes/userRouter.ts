@@ -1,10 +1,11 @@
 import express from 'express';
+import { isPaginated } from '../middleware';
 import { Users } from '../controllers';
 
 export const userRouter = express.Router();
 
 userRouter
-  .get('/', Users.getAll)
+  .get('/',isPaginated, Users.getAll)
   .get('/:id', Users.get)
   .delete('/:id', Users.delete)
   .put('/:id', Users.put)
