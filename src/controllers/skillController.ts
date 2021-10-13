@@ -37,12 +37,12 @@ export class Skills {
      * @apiName delete
      * @apiGroup Skills
      *
-     * @apiParam {string} the name of the skill to delete (body).
+     * @apiParam {string} name the name of the skill to delete (body).
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 BadRequest
      *     {
-     *           "message": "Category was added"
+     *           "message": "Skill was deleted"
      *   }
      *
      * @apiError Bad Request Wrong input data.

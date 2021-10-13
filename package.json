@@ -41,5 +41,12 @@
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.9.10"
+  },
+  "apidoc": {
+    "name": "example",
+    "version": "0.1.0",
+    "description": "apiDoc basic example",
+    "title": "Custom apiDoc browser title",
+    "url" : "https://api.github.com/v1"
   }
 }

@@ -4,7 +4,6 @@ import { PaginatedRequest } from 'types';
 import { Categories } from '../controllers';
 import { isPaginated } from '../middleware';
 
-
 export const categoryRouter = express.Router();
 
 categoryRouter  

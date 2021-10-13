@@ -9,8 +9,8 @@ export class Categories {
      * @apiName getAll
      * @apiGroup Category
      *
-     * @apiParam {number} limit The number of items for paginations.
-     * @apiParam {number} offset Page for json.
+     * @apiParam {number} limit The number of items for paginations (param).
+     * @apiParam {number} offset Page for json (param).
      *
      * @apiSuccessExample Success-Response:
      *    [
@@ -32,13 +32,13 @@ export class Categories {
      *       }
      *   ]
      *
-     * @apiError Bad Request Wrong input data.
+     * @apiError BadRequest Wrong input data.
      *
      * @apiErrorExample Error-Response:
      *     HTTP/1.1 400 BadRequest
      *     {
      *           "message": "Bad request"
-     *   }
+     *     }
      */
 
     public static async getAll(req: PaginatedRequest, res: Response): Promise<Response> {
@@ -63,6 +63,30 @@ export class Categories {
     };
 
     
+    /**
+     * @api {get} /category/:name Return all categories from the database
+     * @apiName get
+     * @apiGroup Category
+     *
+     * @apiSuccessExample Success-Response:
+     *    [
+     *      {
+     *           "id": 1,
+     *           "name": "Languages",
+     *           "createdAt": null,
+     *           "updatedAt": "2021-10-13T08:37:38.000Z"
+     *       },
+     *   ]
+     *
+     * @apiError BadRequest Wrong input data.
+     *
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 400 BadRequest
+     *     {
+     *           "message": "Bad request"
+     *   }
+     */
+
     public static async get(req: Request, res: Response): Promise<Response> {
         try {
 
@@ -73,6 +97,7 @@ export class Categories {
             });
         }
         catch (e) {
+            console.log(e);
             return res.status(400).json({
                 message: 'Bad request',
             });
@@ -84,15 +109,15 @@ export class Categories {
      * @apiName add
      * @apiGroup Category
      *
-     * @apiParam {string} the name of the new category (body).
+     * @apiParam {string} Name The name of the new category.
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 BadRequest
      *     {
      *           "message": "Category was added"
-     *   }
+     *     }
      *
-     * @apiError Bad Request Wrong input data.
+     * @apiError BadRequest Wrong input data.
      *
      * @apiErrorExample Error-Response:
      *     HTTP/1.1 400 BadRequest
@@ -117,7 +142,7 @@ export class Categories {
      * @apiName delete
      * @apiGroup Category
      *
-     * @apiParam {string} the name of the new category (body).
+     * @apiParam {string} the name of the new category.
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 BadRequest
@@ -125,7 +150,7 @@ export class Categories {
      *           "message": "Category was deleted"
      *   }
      *
-     * @apiError Bad Request Wrong input data.
+     * @apiError BadRequest Wrong input data.
      *
      * @apiErrorExample Error-Response:
      *     HTTP/1.1 404 NotFound
@@ -135,9 +160,7 @@ export class Categories {
      */
 
     public static async delete(req: Request, res: Response): Promise<Response> {
-        console.log(req.params);
         if (Category.findAll({ where: {name: req.params.name}})) {
-            console.log(req.params);
             await Category.delete(req.params.name);
             return res.status(200).json({ messaege: 'Category was deleted'});
         } else {
@@ -147,10 +170,10 @@ export class Categories {
 
     /**
      * @api {put} /category/:name Add a new category to the db
-     * @apiName put
+     * @apiName update
      * @apiGroup Category
      *
-     * @apiParam {string} the name of the new category.
+     * @apiParam {string} the new name of the category.
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 BadRequest
@@ -164,12 +187,13 @@ export class Categories {
      *     HTTP/1.1 400 BadRequest
      *     {
      *           "message": "Bad request"
-     *   }
+     *     }
+     * 
      * @apiError Not Found Wrong input data.
      * HTTP/1.1 404 NotFound
      *     {
      *           "message": "Item was not found"
-     *   }
+     *     }
      */
 
     public static async update(req: Request, res: Response): Promise<Response> {

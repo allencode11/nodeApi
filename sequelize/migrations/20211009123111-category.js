@@ -15,19 +15,16 @@ module.exports = {
       },
       createdAt: {
         type: Sequelize.DATE,
-        field: 'created_at',
         defaultValue: DataTypes.NOW,
       },
       updatedAt: {
         type: Sequelize.DATE,
-        field: 'updated_at',
         defaultValue: DataTypes.NOW,
       }
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Add reverting commands here.
     await queryInterface.dropTable('categories');
   }
 };
