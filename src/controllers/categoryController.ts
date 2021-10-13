@@ -64,7 +64,7 @@ export class Categories {
 
     
     /**
-     * @api {get} /category/:name Return all categories from the database
+     * @api {get} /category/:name Return a categories from the database
      * @apiName get
      * @apiGroup Category
      *
@@ -105,7 +105,7 @@ export class Categories {
     };
 
     /**
-     * @api {post} /category Add a new category to the db
+     * @api {post} /category Add a category to the db
      * @apiName add
      * @apiGroup Category
      *
@@ -169,7 +169,7 @@ export class Categories {
     };
 
     /**
-     * @api {put} /category/:name Add a new category to the db
+     * @api {put} /category/:name Update a category from the db
      * @apiName update
      * @apiGroup Category
      *

@@ -73,13 +73,12 @@ export class Users {
     };
 
     /**
-     * @api {get} /user Return all categories from the database
+     * @api {get} /user/:id Return all user's data from the database
      * @apiName get
      * @apiGroup Users
      *
      * @apiParam {number} limit The number of items for paginations.
      * @apiParam {number} offset Page for json.
-     * @apiParam {number} :id User id.
      *
      * @apiSuccessExample Success-Response:
      *    [
@@ -143,7 +142,7 @@ export class Users {
     };
 
     /**
-     * @api {post} /user Return all categories from the database
+     * @api {post} /user Add a new  categoriy to the database
      * @apiName post
      * @apiGroup Users
      *
@@ -178,15 +177,10 @@ export class Users {
     };
 
     /**
-     * @api {delete} /user/:id Return all categories from the database
+     * @api {delete} /user/:id Delete an user from the database.
      * @apiName delete
      * @apiGroup Users
      *
-     * @apiParam {string} firstName User's new first name.
-     * @apiParam {string} lastName User's new last name.
-     * @apiParam {string} email  User's new email.
-     * @apiParam {string} description  A new short section about the User.
-     * @apiParam {avatar} email  New path for the User's photo.
      * 
      * @apiSuccessExample Success-Response:
      *    
@@ -212,11 +206,15 @@ export class Users {
     };
 
     /**
-     * @api {put} /user/:id Return all categories from the database
+     * @api {put} /user/:id Update an user
      * @apiName put
      * @apiGroup Users
-     *
-     * @apiParam {number} User's id (param).
+     * 
+     * @apiParam {string} firstName User's new first name.
+     * @apiParam {string} lastName User's new last name.
+     * @apiParam {string} email  User's new email.
+     * @apiParam {string} description  A new short section about the User.
+     * @apiParam {avatar} email  New path for the User's photo.
      * 
      * @apiSuccessExample Success-Response:
      *    
