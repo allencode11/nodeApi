@@ -1,9 +1,13 @@
-import express from 'express';
-import { Auth } from '../controllers';
+import express, { Request, Response } from 'express';
+import passport from 'passport';
+import { isLoggedIn } from '../middleware';
 
 export const authRouter = express.Router();
 
 authRouter
-  .get('login', Auth.login)
-  .get('register', Auth.register)
-  .get('logout', Auth.logout);
+  .get('/login', passport.authenticate('google', { scope: ['email', 'profile'] }))
+  .get('/login/token', (req: Request, res: Response) => {
+    console.log(req.query);
+    const { code } = req.query;
+  })
+  .get('/logout', isLoggedIn);

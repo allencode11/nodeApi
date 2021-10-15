@@ -32,7 +32,7 @@ export function setupUserModel(sequelize: Sequelize) : typeof User {
     },
     {
         sequelize,
-        modelName: 'User',
+        modelName: 'user',
         tableName: 'users',
     });
     

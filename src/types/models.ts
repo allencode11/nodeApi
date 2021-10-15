@@ -1,3 +1,5 @@
+import { Category, Skill, User } from '../repositories';
+
 export interface ICategoryData {
   name: string,
 };
@@ -32,4 +34,10 @@ export interface ISearchData {
   avatar: string,
   description:string,
   skills: ICategoryData[],
+}
+
+export interface SequelizeModels {
+  Category: typeof Category,
+  User: typeof User,
+  Skill: typeof Skill,
 }

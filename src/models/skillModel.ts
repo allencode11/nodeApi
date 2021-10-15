@@ -1,4 +1,4 @@
-import { Skill } from '../repositories';
+import { Skill , Category, User} from '../repositories';
 import { DataTypes, Sequelize } from 'sequelize';
 
 export function setupSkillModel(sequelize: Sequelize) : typeof Skill {
@@ -13,16 +13,16 @@ export function setupSkillModel(sequelize: Sequelize) : typeof Skill {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        category: {
-            type: DataTypes.STRING,
+        categoryId: {
+            type: DataTypes.NUMBER,
             allowNull: false,
         },
     },
     {
         sequelize,
-        modelName: 'skills',
+        modelName: 'skill',
         tableName: 'skills',
     });
     
     return Skill;
-}
+};

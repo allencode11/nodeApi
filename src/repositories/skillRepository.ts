@@ -1,8 +1,12 @@
 import { Category, User, UserSkills } from '../repositories';
-import { Model } from 'sequelize';
-import { ISearchData, ISkillsData, IUserData, Params } from '../types';
+import { HasMany, Model } from 'sequelize';
+import { ISkillsData, IUserData, Params, SequelizeModels} from '../types';
 
 export class Skill extends Model {
+  public static associations: {
+    category: HasMany<Skill>,
+  };
+  
   public id: number;
 
   public name: string;
@@ -13,6 +17,11 @@ export class Skill extends Model {
 
   public readonly updatedAt!: Date;
   
+  public static associate(models: SequelizeModels): void {
+    Skill.belongsToMany(User, { through: 'userId', as: 'user' });
+    Skill.belongsTo(Category, { foreignKey: 'categoryId', targetKey: 'id', as: 'category' });
+  }
+
   public static async getAllPaginated(params: Params): Promise<{ rows: Skill[], count: number }> {
     const { limit, offset } = params;
 
@@ -20,7 +29,13 @@ export class Skill extends Model {
       raw: true,
       offset,
       limit,
-      order: ['id', 'asc'],
+      include: [
+        {
+          association: this.associations.category,
+          attributes: ['id', 'name'],
+        },
+      ],
+      order: [['id', 'asc']],
     });
   }
 
@@ -44,11 +59,15 @@ export class Skill extends Model {
   
   public static async addSkill(skill: ISkillsData[]): Promise<number> {  
     try {
-      skill.forEach( async (element) => {
-        if (await this.findByPk(element.name)) {
+        skill.forEach( async (element) => {
+        console.log(element);
+        const { name, categoryId } = element;
+        console.log(name, categoryId);
+
+        if (await this.findByPk(name)) {
           throw new Error('Item already exists');
         } else {
-          await this.create(element);
+          await this.create({name, categoryId});
         }
       });
     }
@@ -60,10 +79,12 @@ export class Skill extends Model {
 
   public static async deleteSkill(userId: number, id: number): Promise<number> {
     try {
-      const tmp = await this.findByPk(id);
+      const tmp = await this.findOne({where: {id}});
+      console.log('here');
       await UserSkills.destroy( { where: { skillId: id , userId } } );
     }
-    catch {
+    catch (e) {
+      console.log(e);
       throw new Error('Item was not deleted');
     }
     return 0

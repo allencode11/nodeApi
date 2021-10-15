@@ -4,23 +4,23 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('userSkills', [
       {
-        userId: 3,
+        userId: 1,
         skillId: 1,
       },
       {
-        userId: 3,
+        userId: 1,
         skillId: 1,
       },
       {
-        userId: 4,
+        userId: 1,
         skillId: 0,
       },
       {
-        userId: 4,
+        userId: 1,
         skillId: 2,
       },
       {
-        userId: 4,
+        userId: 1,
         skillId: 2,
       }
     ], {});

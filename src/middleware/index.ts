@@ -1,6 +1,9 @@
 import { DEFAULT_LIMIT, MAX_LIMIT, MIN_LIMIT } from '../constants';
-import { NextFunction, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import { PaginatedRequest } from '../types';
+import { setupPassport } from '../passport-setup';
+
+setupPassport();
 
 export const isPaginated = (req: PaginatedRequest, res: Response, next: NextFunction) => {
     const limit = Number(req.query.limit)
@@ -18,4 +21,10 @@ export const isPaginated = (req: PaginatedRequest, res: Response, next: NextFunc
     }
     
     next();
+  }
+
+  export const isLoggedIn = (req:  Request & { user: any }, res: Response, next: NextFunction) => {
+  
+    next()
+    // req.user ? next() : res.sendStatus(401);
   }

@@ -22,6 +22,7 @@ export class Skills {
             });
         }
         catch (e) {
+            console.log(e);
             return res.status(400).json({
                 message: 'Bad request',
             });
@@ -29,7 +30,8 @@ export class Skills {
     };
 
     public static async post(req: Request, res: Response): Promise<Response> {
-        return res.json( await Skill.create(req.body)); 
+        console.log(req.body);
+        return res.json( await Skill.addSkill(req.body)); 
     };
 
     /**

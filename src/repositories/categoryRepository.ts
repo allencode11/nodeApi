@@ -1,7 +1,12 @@
-import { Model } from 'sequelize';
-import { ICategory, Params } from '../types';
+import { HasOne, Model, HasMany, Op } from 'sequelize';
+import { ICategory, Params, SequelizeModels } from '../types';
 
 export class Category extends Model {
+  public static associations: {
+    skill: HasOne<Category>,
+    };
+  
+
   public id!: number;
   
   public name!: string;
@@ -10,6 +15,16 @@ export class Category extends Model {
 
   public readonly updatedAt!: Date;
 
+  // Category.hasMany(models.Skill, {foreignKey: 'categoryId', sourceKey: 'id'});
+  // Skill.belongsTo(Category, {foreignKey: 'categoryId', targetKey: 'id'});
+
+  // Skill.belongsToMany(User, {through: 'userId'});
+  // User.belongsToMany(Skill, {through: 'userID'});
+  
+  public static associate(models: SequelizeModels): void {
+    Category.hasMany(models.Skill, {foreignKey: 'categoryId', sourceKey: 'id', as: 'skill'});
+  };
+
   public static async getAllPaginated(params: Params): Promise<{ rows: Category[], count: number }> {
     const { limit, offset } = params;
 
@@ -17,6 +32,12 @@ export class Category extends Model {
       raw: true,
       offset,
       limit,
+      include: [
+        {
+          association: this.associations.skill,
+          attributes: ['id', 'name'],
+        },
+      ],
       order: [['id', 'asc']],
     });
   }
@@ -24,6 +45,12 @@ export class Category extends Model {
   public static async get(name: string): Promise<Category> {
     return this.findOne({
       raw: true,
+      include: [
+        {
+          association: this.associations.skill,
+          attributes: ['id', 'name'],
+        },
+      ],
       where: { 
         name,
       },    
