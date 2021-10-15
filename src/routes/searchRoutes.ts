@@ -1,12 +1,9 @@
 import express from 'express';
-import { Search } from '../controllers';
+import { isPaginated } from '../middleware';
+import { Skills, Users } from '../controllers';
 
-const router = express.Router();
+export const searchRouter = express.Router();
 
-router.route('/search')
-    .get(Search.getSkills)
-    .delete(Search.deleteSkill)
-    .patch(Search.editSkill)
-    .post(Search.addSkills);
-
-export default router;
+searchRouter
+  .get('/',isPaginated, Skills.search)
+  .get('/:id', Users.get);

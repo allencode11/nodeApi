@@ -1,23 +1,26 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "jsRules": {},
+  "rules": {
+    "trailing-comma": [
+      true,
+      {
+        "singleline": "never",
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        }
+      }
     ],
-    "jsRules": {},
-    "rules": {
-        "trailing-comma": [true, {
-            "singleline": "never",
-            "multiline": {
-              "objects": "always",
-              "arrays": "always",
-              "functions": "never",
-              "typeLiterals": "ignore"
-            }
-          }],
-          "quotes": [2, "single", { "avoidEscape": true }],
-          "quotemark": [true, "single", "avoid-escape"],
-          "object-literal-sort-keys": false,
-          "ordered-imports": false
-    },
-    "rulesDirectory": []
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "quotemark": [true, "single", "avoid-escape"],
+    "prettier/prettier": ["error", { "singleQuote": true }],
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "member-ordering": false
+  },
+  "rulesDirectory": []
 }

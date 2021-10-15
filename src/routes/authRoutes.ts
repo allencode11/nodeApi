@@ -1,16 +1,13 @@
-import express from 'express';
-import { Auth } from '../controllers';
+import express, { Request, Response } from 'express';
+import passport from 'passport';
+import { isLoggedIn } from '../middleware';
 
-const router = express.Router();
+export const authRouter = express.Router();
 
-
-router.route('/login')
-  .get(Auth.login)
-
-router.route('/register')
-  .get(Auth.register);
-
-router.route('/logout')
-  .get(Auth.logout);
-
-export default router;
+authRouter
+  .get('/login', passport.authenticate('google', { scope: ['email', 'profile'] }))
+  .get('/login/token', (req: Request, res: Response) => {
+    console.log(req.query);
+    const { code } = req.query;
+  })
+  .get('/logout', isLoggedIn);
