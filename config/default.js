@@ -2,7 +2,7 @@ module.exports.development = {
   username: 'root',
   password: 'admin123',
   database: 'database_development',
-  host: '127.0.0.1',
+  host: 'localhost',
   dialect: 'mysql',
 };
 

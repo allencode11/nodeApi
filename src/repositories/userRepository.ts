@@ -6,7 +6,7 @@ export class User extends Model {
     skill: HasMany<User>,
   };
 
-  public userId!: number;
+  public id!: number;
   
   public firstName!: string;
   
@@ -27,7 +27,7 @@ export class User extends Model {
   // as: 'projects'
   
   public static associate(models: SequelizeModels): void {
-    User.belongsToMany(models.Skill, { through: 'userId', as: 'skill'});
+    User.belongsToMany(models.Skill, { through: 'id', as: 'skill'});
   }
   
   public static async getAllPaginated(params: Params): Promise<{ rows: User[], count: number }> {
