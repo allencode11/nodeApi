@@ -21,13 +21,9 @@ export class User extends Model {
   public readonly createdAt!: Date;
 
   public readonly updatedAt!: Date;
-
-  // through: 'writer_of_project'
-  // foreign-key: 'user'
-  // as: 'projects'
   
   public static associate(models: SequelizeModels): void {
-    User.belongsToMany(models.Skill, { through: 'id', as: 'skill'});
+    User.hasMany(models.Skill, { foreignKey: 'id', as: 'skill' });
   }
   
   public static async getAllPaginated(params: Params): Promise<{ rows: User[], count: number }> {
@@ -40,7 +36,7 @@ export class User extends Model {
       include: [
         {
           association: this.associations.skill,
-          attributes: ['id', 'name'],
+          // attributes: ['skillId', 'name'],
         },
       ],
       order: [['id', 'asc']],

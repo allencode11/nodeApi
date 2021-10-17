@@ -5,6 +5,7 @@ import { ISkillsData, IUserData, Params, SequelizeModels} from '../types';
 export class Skill extends Model {
   public static associations: {
     category: HasMany<Skill>,
+    users: HasMany<Skill>,
   };
   
   public id: number;
@@ -18,9 +19,9 @@ export class Skill extends Model {
   public readonly updatedAt!: Date;
   
   public static associate(models: SequelizeModels): void {
-    Skill.belongsToMany(User, { through: 'userId', as: 'user' });
-    Skill.belongsTo(Category, { foreignKey: 'categoryId', targetKey: 'id', as: 'category' });
-  }
+    Skill.belongsTo(models.User, { foreignKey: 'id', as: 'User'});
+    Skill.belongsTo(models.Category, { foreignKey: 'categoryId', targetKey: 'id', as: 'category' });
+  };
 
   public static async getAllPaginated(params: Params): Promise<{ rows: Skill[], count: number }> {
     const { limit, offset } = params;
@@ -34,10 +35,14 @@ export class Skill extends Model {
           association: this.associations.category,
           attributes: ['id', 'name'],
         },
+        {
+          association: this.associations.users,
+          attributes: ['userId', 'skillId'],
+        },
       ],
       order: [['id', 'asc']],
     });
-  }
+  };
 
   public static async getIdByName(skills: string[]): Promise<number[]> {
     
@@ -99,16 +104,18 @@ export class Skill extends Model {
 
     const userIDs: number[] =[];
 
-    skillsId.forEach(async element => {
-      const temp = await UserSkills.findAll({ where: { skillId: element } });
-      userIDs.push(...temp.map((item) => item.userId));
-    });
+    // skillsId.forEach(async element => {
+    //   const temp = await UserSkills.findAll({ where: { skillId: element } });
+    //   userIDs.push(...temp.map((item) => item.userId));
+    // });
 
-    const users: IUserData[] = [];
-    userIDs.forEach(async element => {
-      users.push(await User.findByPk(element));
-    });
+    // const users: IUserData[] = [];
+    // userIDs.forEach(async element => {
+    //   users.push(await User.findByPk(element));
+    // });
 
-    return users;
+    // return users;
+
+    return null;
   };
 }

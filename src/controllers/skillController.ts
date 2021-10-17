@@ -7,6 +7,76 @@ export class Skills {
        return res.json( await Skill.getIdByName([req.params.name]));
     }
 
+    /**
+     * @api {get} /skill Return all skills from the database
+     * @apiName get
+     * @apiGroup Skill
+     *
+     * @apiParam {number} limit The number of items for paginations (params).
+     * @apiParam {number} offset Page for json (params).
+     *
+     * @apiSuccessExample Success-Response:
+     *   {
+     *     "total": 5,
+     *     "data": [ 
+     *     {
+     *        "id": 1,
+     *        "name": "Java",
+     *        "categoryId": 0,
+     *        "createdAt": null,
+     *        "updatedAt": null,
+     *        "category.id": null,
+     *        "category.name": null
+     *     },
+     *     {
+     *        "id": 2,
+     *        "name": "NodeJs",
+     *        "categoryId": 1,
+     *        "createdAt": null,
+     *        "updatedAt": null,
+     *        "category.id": null,
+     *        "category.name": null
+     *     },
+     *     {
+     *        "id": 3,
+     *        "name": "EntityFramework",
+     *        "categoryId": 2,
+     *        "createdAt": null,
+     *        "updatedAt": null,
+     *        "category.id": null,
+     *        "category.name": null
+     *     },
+     *     {
+     *        "id": 4,
+     *        "name": "JavaScript",
+     *        "categoryId": 0,
+     *        "createdAt": null,
+     *        "updatedAt": null,
+     *        "category.id": null,
+     *        "category.name": null
+     *     },
+     *     {
+     *        "id": 5,
+     *        "name": "JavaScript",
+     *        "categoryId": 0,
+     *        "createdAt": null,
+     *        "updatedAt": null,
+     *        "category.id": null,
+     *        "category.name": null
+     *      }
+     *    ],
+     *    "limit": 10,
+     *    "offset": 0
+     *  }
+     * @apiError BadRequest Wrong input data.
+     *
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 400 BadRequest
+     *     {
+     *           "message": "Bad request"
+     *     }
+     */
+
     public static async get(req: PaginatedRequest, res: Response): Promise<Response> {
         try {
 

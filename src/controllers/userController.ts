@@ -123,13 +123,7 @@ export class Users {
     public static async get(req: RequestParam, res: Response): Promise<Response> {
         try {
             const user = await User.getUser(req.params.id);
-            // const skillsIds = await UserSkills.getSkillsByUserId(req.params.id);
-            // const skills: string[] = [];
-
-            // skillsIds.forEach(async (element) => {
-            //     const temp = await Skill.findByPk(element);
-            //     skills.push(temp.name);
-            // });
+            
             return res.json({
                 userdata: user,
                 // userSkills: skills,
