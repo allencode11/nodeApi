@@ -5,8 +5,10 @@ import { Skills } from '../controllers';
 export const skillRouter = express.Router();
 
 skillRouter
-  .get('/:name', Skills.find)
-  .get('/', isPaginated, Skills.get)
+  .get('/:id', Skills.find)
+  .get('/admin/:name', Skills.getIdByName)
+  .get('/', isPaginated, Skills.getAll)
   .delete('/:id', Skills.delete)
-  // .patch('/:id', Skills.put)
+  .delete('/admin/:id', Skills.deleteFromDb)
   .post('/', Skills.post);
+  //.put('/:id', Skills.edit);

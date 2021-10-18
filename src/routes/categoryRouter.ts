@@ -8,7 +8,7 @@ export const categoryRouter = express.Router();
 
 categoryRouter  
   .get('/', isPaginated, Categories.getAll)
-  .get('/:name', Categories.get)
-  .delete('/:name', Categories.delete)
-  .put('/:name', Categories.update)
+  .get('/:id', Categories.get)
+  .delete('/:id', Categories.delete)
+  .put('/:id', Categories.update)
   .post('/', Categories.add);

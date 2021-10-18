@@ -1,3 +1,4 @@
+import e from 'express';
 import { HasOne, Model, HasMany, Op } from 'sequelize';
 import { ICategory, Params, SequelizeModels } from '../types';
 
@@ -15,12 +16,6 @@ export class Category extends Model {
 
   public readonly updatedAt!: Date;
 
-  // Category.hasMany(models.Skill, {foreignKey: 'categoryId', sourceKey: 'id'});
-  // Skill.belongsTo(Category, {foreignKey: 'categoryId', targetKey: 'id'});
-
-  // Skill.belongsToMany(User, {through: 'userId'});
-  // User.belongsToMany(Skill, {through: 'userID'});
-  
   public static associate(models: SequelizeModels): void {
     Category.hasMany(models.Skill, {foreignKey: 'categoryId', sourceKey: 'id', as: 'skill'});
   };
@@ -42,7 +37,7 @@ export class Category extends Model {
     });
   }
 
-  public static async get(name: string): Promise<Category> {
+  public static async get(id: number): Promise<Category> {
     return this.findOne({
       raw: true,
       include: [
@@ -52,14 +47,20 @@ export class Category extends Model {
         },
       ],
       where: { 
-        name,
+        id,
       },    
     });
   };
 
-  public static async delete(name: string): Promise<number> {
+  public static async delete(id: number): Promise<number> {
 
-    return this.destroy({ where: { name } });
+    try {
+      await this.findByPk(id);
+      return await this.destroy({ where: { id } });
+    } catch (e) {
+      console.log(e);
+    }
+    
   };
 
   public static async put(nameObj: string, id: number): Promise<[number, Category[]]> {
