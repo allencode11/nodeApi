@@ -7,9 +7,9 @@ module.exports.development = {
 };
 
 module.exports.production = {
-  username: 'test1',
-  password: '123',
-  database: 'production',
-  host: '123.123.123.123',
+  username: 'mysql',
+  password: '797edc20398462f6',
+  database: 'internship_nodejs_api',
+  host: 'dokku-mysql-internship-nodejs-api',
   dialect: 'mysql',
 };
