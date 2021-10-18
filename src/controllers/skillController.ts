@@ -10,54 +10,31 @@ export class Skills {
      * @apiGroup Skill
      *
      * @apiSuccessExample Success-Response:
+     * 
      * {
-     *   "total": 2,
-     *   "data": [
-     *           {
-     *             "id": 1,
-     *             "name": "Java",
-     *             "categoryId": 0,
-     *             "createdAt": null,
-     *             "updatedAt": null,
-     *             "category.id": null,
-     *             "category.name": null,
-     *             "users.id": 1,
-     *             "users.firstName": "Admin",
-     *             "users.lastName": "Admin",
-     *             "users.email": "admin@gmail.com",
-     *             "users.description": "null",
-     *             "users.avatar": "user/avatar",
-     *             "users.createdAt": null,
-     *             "users.updatedAt": null
-     *           },
-     *           {
-     *              "id": 2,
-     *              "name": "NodeJs",
-     *              "categoryId": 1,
-     *              "createdAt": null,
-     *              "updatedAt": null,
-     *              "category.id": 1,
-     *              "category.name": "Languages",
-     *              "users.id": 2,
-     *              "users.firstName": "Alina",
-     *              "users.lastName": "Enache",
-     *              "users.email": "al.el.en.lina@gmail.com",
-     *              "users.description": "client",
-     *              "users.avatar": "user/avatar1",
-     *              "users.createdAt": null,
-     *              "users.updatedAt": null
-     *            }
-     *          ],
-     *          "limit": 10,
-     *          "offset": 0
-     *         }
-     * @apiError BadRequest Wrong input data.
-     *
-     * @apiErrorExample Error-Response:
-     *     HTTP/1.1 400 BadRequest
+     *   "count": 1,
+     *   "rows": [
      *     {
-     *           "message": "Bad request"
+     *       "id": 3,
+     *       "name": "EntityFramework",
+     *       "categoryId": 2,
+     *       "createdAt": null,
+     *       "updatedAt": null,
+     *       "users.id": null,
+     *       "users.firstName": null,
+     *       "users.lastName": null,
+     *       "users.email": null,
+     *       "users.description": null,
+     *       "users.avatar": null,
+     *       "users.createdAt": null,
+     *       "users.updatedAt": null,
+     *       "category.id": 2,
+     *       "category.name": "Technologies",
+     *       "category.createdAt": null,
+     *       "category.updatedAt": null
      *     }
+     *   ]
+     * }
      */
     public static async find(req: RequestParam, res: Response): Promise<Response> {
        return res.json( await Skill.get(req.params.id));
@@ -146,8 +123,45 @@ export class Skills {
         };
     };
 
+    /**
+     * @api {post} /skill Add a category to the db
+     * @apiName post
+     * @apiGroup Skill
+     *
+     * @apiParam {string} name The name of the new skill.
+     * @apiParam {number} categoryId The id of the category.
+     * 
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 BadRequest
+     *     {
+     *           "message": "item was added"
+     *     }
+     *
+     * @apiError BadRequest Wrong input data.
+     *
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 400 BadRequest
+     *     {
+     *           "message": "Bad request"
+     *   }
+     */
+
     public static async post(req: Request, res: Response): Promise<Response> {
-        return res.json( await Skill.addSkill(req.body)); 
+        try {
+            await Skill.addSkill(req.body)
+            return res.status(200).json({ message: 'Item was added'}); 
+        } catch (e) {
+            return res.status(404).json({ message: 'Bad request'});
+        }
+    };
+
+    public static async postToUser(req: RequestParam, res: Response): Promise<Response> {
+        try {
+            await Skill.addSkillToUser(req.body.skillId, req.params.id);
+            return res.status(200).json({ message: 'Item was added'}); 
+        } catch (e) {
+            return res.status(404).json({ message: 'Bad request'});
+        }
     };
 
     /**
@@ -200,10 +214,12 @@ export class Skills {
      *     }
      */
     public static async deleteFromDb(req: RequestParam, res: Response): Promise<Response> {
-        try {
+        const skill = Skill.get(req.params.id);
+
+        if(skill) {
             await Skill.deleteSkillFromDb(req.params.id);
             return res.status(200).json({ message: 'Item was deleted sucessfully'});
-        } catch (e) {
+        } else {
             return res.status(400).json({ message: 'Error! Item was not deleted'});
         }
     };

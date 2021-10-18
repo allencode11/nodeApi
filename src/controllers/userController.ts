@@ -78,39 +78,31 @@ export class Users {
      * @apiName get
      * @apiGroup Users
      *
-     * @apiParam {number} limit The number of items for paginations.
-     * @apiParam {number} offset Page for json.
-     *
      * @apiSuccessExample Success-Response:
-     *    [
+     * {
+     *   "count": 1,
+     *   "rows": [
      *      {
-     *           "id": 4,
-     *           "firstName": "Alina",
-     *           "lastName": "Enache",
-     *           "email": "al.el.en.lina@gmail.com",
-     *           "description": "client",
-     *           "avatar": "user/avatar1",
-     *           "createdAt": null,
-     *           "updatedAt": null
-     *       },
-     *       [
-     *          {
-     *              "id": 2,
-     *              "name": "Sql",
-     *              "createdAt": null,
-     *              "updatedAt": null,
-     *              "categoryId": 0
-     *          },
-     *          {  
-     *              "id": 3,
-     *              "name": "Js",
-     *              "createdAt": null,
-     *              "updatedAt": null,
-     *              "categoryId": 1
-     *          }
-     *      ]
-     *   ]
-     *
+     *         "id": 3,
+     *         "name": "EntityFramework",
+     *         "categoryId": 2,
+     *         "createdAt": null,
+     *         "updatedAt": null,
+     *         "users.id": null,
+     *         "users.firstName": null,
+     *         "users.lastName": null,
+     *         "users.email": null,
+     *         "users.description": null,
+     *         "users.avatar": null,
+     *         "users.createdAt": null,
+     *         "users.updatedAt": null,
+     *         "category.id": 2,
+     *         "category.name": "Technologies",
+     *         "category.createdAt": null,
+     *         "category.updatedAt": null
+     *       }
+     *    ]
+     *  }
      * @apiError Bad Request Wrong input data.
      *
      * @apiErrorExample Error-Response:
@@ -164,10 +156,9 @@ export class Users {
      */
     public static async post(req: Request, res: Response): Promise<Response> {
         try {
-            await User.addUser(req.body);
-            return res.status(200).json({message: 'user was created'});
+            const user = await User.addUser(req.body);
+            return res.status(200).json({message: 'user was added'});
         } catch (e) {
-            console.error(e);
             return res.status(400).json({ message: 'Bad request'})
         }
     };

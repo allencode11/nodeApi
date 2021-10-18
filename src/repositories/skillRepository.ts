@@ -63,26 +63,27 @@ export class Skill extends Model {
         },
       ],
       where: { id },
-      order: [['id', 'asc']],
     });
   }
   
-  public static async addSkill(skill: ISkillsData[]): Promise<number> {  
+  public static async addSkill(skill: ISkillsData[]): Promise<[Skill, boolean]> {  
+    let tempSkill;
+    
     try {
       skill.forEach( async (element) => {
-        const { name, categoryId } = element;
-
-        if (await this.findByPk(name)) {
-          throw new Error('Item already exists');
-        } else {
-          await this.create({name, categoryId});
-        }
-      });
-    }
-    catch {
+        const { name } = element;
+        tempSkill = await this.findOrCreate({where: {name}, defaults: element});
+        });
+    } catch (e) {
+      tempSkill = null;
       throw new Error('Item was not added');
     }
-    return 0
+
+    return tempSkill;
+  };
+
+  public static async addSkillToUser(skillId: number, id: number): Promise<void> {  
+    await UserSkills.findOrCreate({where: {skillId , userId: id}, defaults: {skillId, userId: id}});
   };
 
   public static async deleteSkill(userId: number, id: number): Promise<number> {
@@ -97,14 +98,6 @@ export class Skill extends Model {
   };
 
   public static async deleteSkillFromDb(id: number): Promise<number> {
-    try {
-      const tmp = await this.findByPk(id);
-      await this.destroy( { where: { id }});
-    }
-    catch (e) {
-      console.log(e);
-      throw new Error('Item was not deleted');
-    }
-    return 0
+      return await this.destroy( { where: { id }});
   };
 }

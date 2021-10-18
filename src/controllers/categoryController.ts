@@ -129,8 +129,13 @@ export class Categories {
 
     public static async add(req: RequestParam, res: Response): Promise<Response> {
         try {
-            await Category.post(req.body.name);
-            return res.status(200).json({ message: 'Category was added'});
+            const post = await Category.post(req.body.name);
+            
+            if( typeof(post) === 'string' ) {
+                return res.status(400).json({ message: 'item already exists'});
+            } else {
+                return res.status(200).json({ message: 'Category was added'})
+            }
         } catch (e) {
             return res.status(400).json({
                 message: 'Bad request',
@@ -160,8 +165,12 @@ export class Categories {
 
     public static async delete(req: RequestParam, res: Response): Promise<Response> {
         try {
-            Category.delete(req.params.id);
+            const temp = Category.delete(req.params.id);
+            if(typeof(temp) === 'string') {
+                return res.status(400).json({ message: 'Category already exists'});
+            }
             return res.status(200).json({ messaege: 'Category was deleted'});
+            
         } catch (e) {
             return res.status(404).json({ message: 'Item does not exist'});
         }

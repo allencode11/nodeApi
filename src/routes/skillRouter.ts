@@ -10,5 +10,6 @@ skillRouter
   .get('/', isPaginated, Skills.getAll)
   .delete('/:id', Skills.delete)
   .delete('/admin/:id', Skills.deleteFromDb)
-  .post('/', Skills.post);
-  //.put('/:id', Skills.edit);
+  .post('/', Skills.post)
+  .post('/:id', Skills.postToUser);
+ // .put('/:id', Skills.edit);
