@@ -1,0 +1,1 @@
+web: PATH=$PATH:./node_modules/typescript/bin tsc && PORT=5000 node dist
