@@ -56,6 +56,7 @@ export class Categories {
             });
         }
         catch (e) {
+            console.log(e);
             return res.status(400).json({
                 message: 'Bad request',
             });
@@ -64,7 +65,7 @@ export class Categories {
 
     
     /**
-     * @api {get} /category/:name Return a categories from the database
+     * @api {get} /category/:name Return a category from the database
      * @apiName get
      * @apiGroup Category
      *

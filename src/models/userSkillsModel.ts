@@ -1,28 +1,27 @@
-import { Skill , Category, User} from '../repositories';
+import { UserSkills } from '../repositories';
 import { DataTypes, Sequelize } from 'sequelize';
 
-export function setupSkillModel(sequelize: Sequelize) : typeof Skill {
-    Skill.init({
-        id: { 
+export function setupUserSkillModel(sequelize: Sequelize) : typeof UserSkills {
+    UserSkills.init({
+        id: {
             type: DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true,
         },
-        name: {
-            field: 'name',
-            type: DataTypes.STRING,
+        skillId: {
+            type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
         },
-        categoryId: {
+        userId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
         },
     },
     {
         sequelize,
-        modelName: 'skill',
-        tableName: 'skills',
+        modelName: 'userSkills',
+        tableName: 'userSkills',
     });
     
-    return Skill;
-};
+    return UserSkills;
+}

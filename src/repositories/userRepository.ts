@@ -1,7 +1,11 @@
-import { Model } from 'sequelize';
-import { IUserData, Params } from '../types';
+import { Model, HasMany } from 'sequelize';
+import { IUserData, Params, SequelizeModels } from '../types';
 
 export class User extends Model {
+  public static associations: {
+    skill: HasMany<User>,
+  };
+
   public id!: number;
   
   public firstName!: string;
@@ -18,6 +22,10 @@ export class User extends Model {
 
   public readonly updatedAt!: Date;
   
+  public static associate(models: SequelizeModels): void {
+    User.hasMany(models.Skill, { foreignKey: 'id', as: 'skill' });
+  }
+  
   public static async getAllPaginated(params: Params): Promise<{ rows: User[], count: number }> {
     const { limit, offset } = params;
 
@@ -25,6 +33,12 @@ export class User extends Model {
       raw: true,
       offset,
       limit,
+      include: [
+        {
+          association: this.associations.skill,
+          // attributes: ['skillId', 'name'],
+        },
+      ],
       order: [['id', 'asc']],
     });
   }
@@ -39,12 +53,26 @@ export class User extends Model {
   };
 
   public static async editUser(obj: IUserData, id: number): Promise<[number, User[]]> {
-    return this.update({ obj }, { where: {id} });
+    return this.update({
+      firstName: obj.firstName,
+      lastName: obj.lastName,
+      avatar: obj.avatar,
+      description: obj.description,
+      email: obj.email }, { where: {id} });
   }
 
   public static async getUser(id: number): Promise<User> {
-    return this.findByPk(id, {
+    return this.findOne({
       raw: true,
+      include: [
+        {
+          association: this.associations.skill,
+          attributes: ['id', 'name'],
+        },
+      ],
+      where: { 
+        id,
+      },    
     });
   }
 }

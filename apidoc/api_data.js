@@ -2,7 +2,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/category",
-    "title": "Add a new category to the db",
+    "title": "Add a category to the db",
     "name": "add",
     "group": "Category",
     "parameter": {
@@ -104,7 +104,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/category/:name",
-    "title": "Return all categories from the database",
+    "title": "Return a categoriy from the database",
     "name": "get",
     "group": "Category",
     "success": {
@@ -200,7 +200,7 @@ define({ "api": [
   {
     "type": "put",
     "url": "/category/:name",
-    "title": "Add a new category to the db",
+    "title": "Update a category from the db",
     "name": "update",
     "group": "Category",
     "parameter": {
@@ -267,8 +267,8 @@ define({ "api": [
             "group": "Parameter",
             "type": "string",
             "optional": false,
-            "field": "the",
-            "description": "<p>name of the skill to delete (body).</p>"
+            "field": "name",
+            "description": "<p>the name of the skill to delete (body).</p>"
           }
         ]
       }
@@ -277,7 +277,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "  HTTP/1.1 200 BadRequest\n  {\n        \"message\": \"Category was added\"\n}",
+          "content": "  HTTP/1.1 200 BadRequest\n  {\n        \"message\": \"Skill was deleted\"\n}",
           "type": "json"
         }
       ]
@@ -308,43 +308,9 @@ define({ "api": [
   {
     "type": "delete",
     "url": "/user/:id",
-    "title": "Return all categories from the database",
+    "title": "Delete an user from the database.",
     "name": "delete",
     "group": "Users",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "firstName",
-            "description": "<p>User's new first name.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "lastName",
-            "description": "<p>User's new last name.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "email",
-            "description": "<p>User's new email.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "description",
-            "description": "<p>A new short section about the User.</p>"
-          }
-        ]
-      }
-    },
     "success": {
       "examples": [
         {
@@ -379,8 +345,8 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/user",
-    "title": "Return all categories from the database",
+    "url": "/user/:id",
+    "title": "Return all user's data from the database",
     "name": "get",
     "group": "Users",
     "parameter": {
@@ -399,13 +365,6 @@ define({ "api": [
             "optional": false,
             "field": "offset",
             "description": "<p>Page for json.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "number",
-            "optional": false,
-            "field": ":id",
-            "description": "<p>User id.</p>"
           }
         ]
       }
@@ -503,7 +462,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/user",
-    "title": "Return all categories from the database",
+    "title": "Add a new  categoriy to the database",
     "name": "post",
     "group": "Users",
     "parameter": {
@@ -575,7 +534,7 @@ define({ "api": [
   {
     "type": "put",
     "url": "/user/:id",
-    "title": "Return all categories from the database",
+    "title": "Update an user",
     "name": "put",
     "group": "Users",
     "parameter": {
@@ -583,10 +542,31 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "number",
+            "type": "string",
             "optional": false,
-            "field": "User",
-            "description": "<p>'s id (param).</p>"
+            "field": "firstName",
+            "description": "<p>User's new first name.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "lastName",
+            "description": "<p>User's new last name.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User's new email.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "description",
+            "description": "<p>A new short section about the User.</p>"
           }
         ]
       }

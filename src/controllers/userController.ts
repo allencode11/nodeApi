@@ -66,6 +66,7 @@ export class Users {
             });
         }
         catch (e) {
+            console.log(e);
             return res.status(400).json({
                 message: 'Bad request',
             });
@@ -122,18 +123,13 @@ export class Users {
     public static async get(req: RequestParam, res: Response): Promise<Response> {
         try {
             const user = await User.getUser(req.params.id);
-            const skillsIds = await UserSkills.getSkillsByUserId(req.params.id);
-            const skills: string[] = [];
-
-            skillsIds.forEach(async (element) => {
-                const temp = await Skill.findByPk(element);
-                skills.push(temp.name);
-            });
+            
             return res.json({
                 userdata: user,
-                userSkills: skills,
+                // userSkills: skills,
             });
         } catch (e) {
+            console.log(e);
             return res.json({
                 message: 'Bad request',
             });
@@ -232,8 +228,13 @@ export class Users {
      */
     public static async put(req: RequestParam, res: Response): Promise<Response> {
         if (User.getUser(req.params.id)) {
-            await User.editUser(req.body, req.params.id);
-            return res.status(200).json({message: 'user was edited sucessfully'});
+            try {
+                await User.editUser(req.body, req.params.id);
+                return res.status(200).json({message: 'user was edited sucessfully'});
+            } catch (e) {
+                console.log(e);
+                return res.send(400).json({ message: 'bed request'});
+            }
         } else {
             return res.status(404).json({ message: 'User does not exist'});
         }

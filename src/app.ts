@@ -14,6 +14,6 @@ app.use('/search', searchRouter);
 app.use('/', authRouter);
 app.use('/category', categoryRouter);
 app.use('/skills', skillRouter);
-app.use('/users', userRouter);
+app.use('/user', userRouter);
 
 export default app;
