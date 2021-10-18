@@ -10,13 +10,11 @@ module.exports = {
         primaryKey: true,
       },
       name: {
-          field: 'name',
           type: DataTypes.STRING,
           allowNull: false,
       },
       categoryId: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
+        type: DataTypes.INTEGER.UNSIGNED,
       },
       createdAt: {
         type: Sequelize.DATE,
