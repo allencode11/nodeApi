@@ -19,7 +19,7 @@ export class Skill extends Model {
   public readonly updatedAt!: Date;
   
   public static associate(models: SequelizeModels): void {
-    Skill.belongsTo(models.User, { foreignKey: 'id', as: 'User'});
+    Skill.belongsTo(models.User, { foreignKey: 'id', as: 'users'});
     Skill.belongsTo(models.Category, { foreignKey: 'categoryId', targetKey: 'id', as: 'category' });
   };
 
@@ -37,7 +37,6 @@ export class Skill extends Model {
         },
         {
           association: this.associations.users,
-          attributes: ['userId', 'skillId'],
         },
       ],
       order: [['id', 'asc']],
@@ -64,10 +63,11 @@ export class Skill extends Model {
   
   public static async addSkill(skill: ISkillsData[]): Promise<number> {  
     try {
-        skill.forEach( async (element) => {
+      console.log('skill', skill);
+      skill.forEach( async (element) => {
         console.log(element);
         const { name, categoryId } = element;
-        console.log(name, categoryId);
+        console.log('lll', name, categoryId);
 
         if (await this.findByPk(name)) {
           throw new Error('Item already exists');

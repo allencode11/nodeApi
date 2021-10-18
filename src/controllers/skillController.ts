@@ -16,58 +16,149 @@ export class Skills {
      * @apiParam {number} offset Page for json (params).
      *
      * @apiSuccessExample Success-Response:
-     *   {
-     *     "total": 5,
-     *     "data": [ 
-     *     {
-     *        "id": 1,
-     *        "name": "Java",
-     *        "categoryId": 0,
-     *        "createdAt": null,
-     *        "updatedAt": null,
-     *        "category.id": null,
-     *        "category.name": null
-     *     },
-     *     {
-     *        "id": 2,
-     *        "name": "NodeJs",
-     *        "categoryId": 1,
-     *        "createdAt": null,
-     *        "updatedAt": null,
-     *        "category.id": null,
-     *        "category.name": null
-     *     },
-     *     {
-     *        "id": 3,
-     *        "name": "EntityFramework",
-     *        "categoryId": 2,
-     *        "createdAt": null,
-     *        "updatedAt": null,
-     *        "category.id": null,
-     *        "category.name": null
-     *     },
-     *     {
-     *        "id": 4,
-     *        "name": "JavaScript",
-     *        "categoryId": 0,
-     *        "createdAt": null,
-     *        "updatedAt": null,
-     *        "category.id": null,
-     *        "category.name": null
-     *     },
-     *     {
-     *        "id": 5,
-     *        "name": "JavaScript",
-     *        "categoryId": 0,
-     *        "createdAt": null,
-     *        "updatedAt": null,
-     *        "category.id": null,
-     *        "category.name": null
-     *      }
-     *    ],
-     *    "limit": 10,
-     *    "offset": 0
-     *  }
+     {
+    "total": 8,
+    "data": [
+        {
+            "id": 1,
+            "name": "Java",
+            "categoryId": 0,
+            "createdAt": null,
+            "updatedAt": null,
+            "category.id": null,
+            "category.name": null,
+            "users.id": 1,
+            "users.firstName": "Admin",
+            "users.lastName": "Admin",
+            "users.email": "admin@gmail.com",
+            "users.description": "null",
+            "users.avatar": "user/avatar",
+            "users.createdAt": null,
+            "users.updatedAt": null
+        },
+        {
+            "id": 2,
+            "name": "NodeJs",
+            "categoryId": 1,
+            "createdAt": null,
+            "updatedAt": null,
+            "category.id": 1,
+            "category.name": "Languages",
+            "users.id": 2,
+            "users.firstName": "Alina",
+            "users.lastName": "Enache",
+            "users.email": "al.el.en.lina@gmail.com",
+            "users.description": "client",
+            "users.avatar": "user/avatar1",
+            "users.createdAt": null,
+            "users.updatedAt": null
+        },
+        {
+            "id": 3,
+            "name": "EntityFramework",
+            "categoryId": 2,
+            "createdAt": null,
+            "updatedAt": null,
+            "category.id": 2,
+            "category.name": "Technologies",
+            "users.id": null,
+            "users.firstName": null,
+            "users.lastName": null,
+            "users.email": null,
+            "users.description": null,
+            "users.avatar": null,
+            "users.createdAt": null,
+            "users.updatedAt": null
+        },
+        {
+            "id": 4,
+            "name": "English",
+            "categoryId": 3,
+            "createdAt": null,
+            "updatedAt": null,
+            "category.id": 3,
+            "category.name": "Frameworks",
+            "users.id": null,
+            "users.firstName": null,
+            "users.lastName": null,
+            "users.email": null,
+            "users.description": null,
+            "users.avatar": null,
+            "users.createdAt": null,
+            "users.updatedAt": null
+        },
+        {
+            "id": 5,
+            "name": "JavaScript",
+            "categoryId": 0,
+            "createdAt": null,
+            "updatedAt": null,
+            "category.id": null,
+            "category.name": null,
+            "users.id": null,
+            "users.firstName": null,
+            "users.lastName": null,
+            "users.email": null,
+            "users.description": null,
+            "users.avatar": null,
+            "users.createdAt": null,
+            "users.updatedAt": null
+        },
+        {
+            "id": 6,
+            "name": "nestjs",
+            "categoryId": 3,
+            "createdAt": "2021-10-17T19:11:50.000Z",
+            "updatedAt": "2021-10-17T19:11:50.000Z",
+            "category.id": 3,
+            "category.name": "Frameworks",
+            "users.id": null,
+            "users.firstName": null,
+            "users.lastName": null,
+            "users.email": null,
+            "users.description": null,
+            "users.avatar": null,
+            "users.createdAt": null,
+            "users.updatedAt": null
+        },
+        {
+            "id": 7,
+            "name": "nextjs",
+            "categoryId": 3,
+            "createdAt": "2021-10-17T19:13:32.000Z",
+            "updatedAt": "2021-10-17T19:13:32.000Z",
+            "category.id": 3,
+            "category.name": "Frameworks",
+            "users.id": null,
+            "users.firstName": null,
+            "users.lastName": null,
+            "users.email": null,
+            "users.description": null,
+            "users.avatar": null,
+            "users.createdAt": null,
+            "users.updatedAt": null
+        },
+        {
+            "id": 8,
+            "name": "nestjs",
+            "categoryId": 3,
+            "createdAt": "2021-10-17T19:13:32.000Z",
+            "updatedAt": "2021-10-17T19:13:32.000Z",
+            "category.id": 3,
+            "category.name": "Frameworks",
+            "users.id": null,
+            "users.firstName": null,
+            "users.lastName": null,
+            "users.email": null,
+            "users.description": null,
+            "users.avatar": null,
+            "users.createdAt": null,
+            "users.updatedAt": null
+        }
+    ],
+    "limit": 10,
+    "offset": 0
+}
      * @apiError BadRequest Wrong input data.
      *
      * @apiErrorExample Error-Response:
@@ -92,7 +183,6 @@ export class Skills {
             });
         }
         catch (e) {
-            console.log(e);
             return res.status(400).json({
                 message: 'Bad request',
             });
@@ -100,7 +190,6 @@ export class Skills {
     };
 
     public static async post(req: Request, res: Response): Promise<Response> {
-        console.log(req.body);
         return res.json( await Skill.addSkill(req.body)); 
     };
 
@@ -127,8 +216,14 @@ export class Skills {
      */
 
     public static async delete(req: RequestParam, res: Response): Promise<Response> {
-        await Skill.deleteSkill(req.params.id, req.body.id);
-        return res.status(200).json({ message: 'Item was deleted sucessfully'});
+        try {
+            console.log(req.body);
+            await Skill.deleteSkill(req.params.id, req.body.skillId);
+            return res.status(200).json({ message: 'Item was deleted sucessfully'});
+        } catch (e) {
+            console.log(e);
+            return res.status(200).json({ message: 'Item was not deleted sucessfully'});
+        }
     };
 
     public static async search(req: Request, res: Response): Promise<Response> {
