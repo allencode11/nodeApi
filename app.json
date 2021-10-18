@@ -1,7 +1,8 @@
 {
-    "scripts": {
-      "dokku": {
-        "postdeploy": "npx sequelize-cli db:seed:all && npx sequelize-cli db:migrate"
-      }
+  "scripts": {
+    "dokku": {
+      "predeploy": "cd /app && npm run build",
+      "postdeploy": "cd /app && npx sequelize-cli db:seed:all && npx sequelize-cli db:migrate"
     }
   }
+}
