@@ -155,23 +155,11 @@ export class Users {
      *   }
      */
     public static async post(req: Request, res: Response): Promise<Response> {
-<<<<<<< HEAD
         try {
             const user = await User.addUser(req.body);
             return res.status(200).json({message: 'user was added'});
         } catch (e) {
             return res.status(400).json({ message: 'Bad request'})
-=======
-        if(await User.findOne({ where: {email: req.body.email}})) {
-            try {
-                const user = await User.addUser(req.body);
-                return res.status(200).json({message: 'user was added'});
-            } catch (e) {
-                return res.status(400).json({ message: 'Bad request'})
-            }
-        } else {
-            return res.status(400).json({ message: 'User already exists'});
->>>>>>> 8f66b8a (reseting project)
         }
     };
 

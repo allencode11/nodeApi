@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-import { authRouter, userRouter, searchRouter, categoryRouter, skillRouter } from './routes';
+import { userRouter, categoryRouter, skillRouter } from './routes';
 import { sequelizeClient } from './sequelizeInit';
 
 const app = express();

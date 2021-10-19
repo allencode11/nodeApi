@@ -27,16 +27,22 @@ export const validateUserId = async (req: RequestParam, res: Response, next: Nex
  };
 
  export const validateEmail = async (req: RequestParam, res: Response, next: NextFunction) => {
+    if (req.body.email === ''|| req.body.name === '') {
+        return res.send(400).json({ message: 'BadRequest! Field can not be null!' });
+    }
     if (await User.findOne({ where: { email: req.body.email }})) {
-        res.send(500).json({ message: 'Internal server error! An user with this email already exist!' });
+        return res.send(500).json({ message: 'Internal server error! An user with this email already exist!' });
     } else {
         next()
     }
  };
 
  export const validateCategoryName= async (req: RequestParam, res: Response, next: NextFunction) => {
+    if (req.body.name === '' || req.body.name === 'null') {
+        return res.send(400).json({ message: 'BadRequest! Field can not be null!' });
+    }
     if (await Category.findOne({ where: { name: req.body.name }})) {
-        res.send(500).json({ message: 'Internal server error! A category with this name already exist!' });
+        res.send(500).json({ message: 'BadRequest! A category with this name already exist!' });
     } else {
         next()
    }
@@ -44,6 +50,9 @@ export const validateUserId = async (req: RequestParam, res: Response, next: Nex
 
 
  export const validateSkillName= async (req: RequestParam, res: Response, next: NextFunction) => {
+    if (req.body.name === '' || req.body.name === '') {
+        return res.send(400).json({ message: 'Internal server error! Field can not be null!' });
+    }
     if (await Skill.findOne({ where: { name: req.body.name }})) {
         res.send(500).json({ message: 'Internal server error! A skill with this name already exist!' })
    } else {

@@ -14,29 +14,6 @@ export class Skills {
      * {
      *   "count": 1,
      *   "rows": [
-<<<<<<< HEAD
-     *     {
-     *       "id": 3,
-     *       "name": "EntityFramework",
-     *       "categoryId": 2,
-     *       "createdAt": null,
-     *       "updatedAt": null,
-     *       "users.id": null,
-     *       "users.firstName": null,
-     *       "users.lastName": null,
-     *       "users.email": null,
-     *       "users.description": null,
-     *       "users.avatar": null,
-     *       "users.createdAt": null,
-     *       "users.updatedAt": null,
-     *       "category.id": 2,
-     *       "category.name": "Technologies",
-     *       "category.createdAt": null,
-     *       "category.updatedAt": null
-     *     }
-     *   ]
-     * }
-=======
      *     {
      *       "id": 3,
      *       "name": "EntityFramework",
@@ -65,7 +42,6 @@ export class Skills {
      *           "message": "Bad request"
      *   }
      *
->>>>>>> 8f66b8a (reseting project)
      */
     public static async find(req: RequestParam, res: Response): Promise<Response> {
        return res.json( await Skill.get(req.params.id));
@@ -163,11 +139,7 @@ export class Skills {
      * @apiParam {number} categoryId The id of the category.
      * 
      * @apiSuccessExample Success-Response:
-<<<<<<< HEAD
-     *     HTTP/1.1 200 BadRequest
-=======
      *     HTTP/1.1 200 Success
->>>>>>> 8f66b8a (reseting project)
      *     {
      *           "message": "item was added"
      *     }
@@ -190,8 +162,6 @@ export class Skills {
         }
     };
 
-<<<<<<< HEAD
-=======
     /**
      * @api {post} /skill/:id Add a category to an user (via userId)
      * @apiName post
@@ -213,7 +183,6 @@ export class Skills {
      *           "message": "Bad request"
      *   }
      */
->>>>>>> 8f66b8a (reseting project)
     public static async postToUser(req: RequestParam, res: Response): Promise<Response> {
         try {
             await Skill.addSkillToUser(req.body.skillId, req.params.id);
