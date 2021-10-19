@@ -1,6 +1,5 @@
 node_modules/
 .env
 dist
-apidoc/
 config/default.js
 .DS_Store
