@@ -1,14 +1,13 @@
 import { DEFAULT_LIMIT, MAX_LIMIT, MIN_LIMIT } from '../constants';
-import express, { NextFunction, Response } from 'express';
-import { PaginatedRequest } from 'types';
+import express from 'express';
 import { Categories } from '../controllers';
-import { isPaginated } from '../middleware';
+import { validateCategoryId, isPaginated, validateCategoryName } from '../middleware';
 
 export const categoryRouter = express.Router();
 
 categoryRouter  
   .get('/', isPaginated, Categories.getAll)
-  .get('/:id', Categories.get)
-  .delete('/:id', Categories.delete)
-  .put('/:id', Categories.update)
-  .post('/', Categories.add);
+  .get('/:id', validateCategoryId, Categories.get)
+  .delete('/:id', validateCategoryId, Categories.delete)
+  .put('/:id', validateCategoryId, Categories.update)
+  .post('/', validateCategoryName, Categories.add);
