@@ -4,7 +4,7 @@ import { PaginatedRequest, RequestParam } from '../types';
 
 export class Users {
     /**
-     * @api {get} /category Get all categories from the database
+     * @api {get} /user Get all users from the database
      * @apiName getAll
      * @apiGroup Users
      *
@@ -80,29 +80,29 @@ export class Users {
      *
      * @apiSuccessExample Success-Response:
      * {
-     *   "count": 1,
-     *   "rows": [
-     *      {
-     *         "id": 3,
-     *         "name": "EntityFramework",
-     *         "categoryId": 2,
-     *         "createdAt": null,
-     *         "updatedAt": null,
-     *         "users.id": null,
-     *         "users.firstName": null,
-     *         "users.lastName": null,
-     *         "users.email": null,
-     *         "users.description": null,
-     *         "users.avatar": null,
-     *         "users.createdAt": null,
-     *         "users.updatedAt": null,
-     *         "category.id": 2,
-     *         "category.name": "Technologies",
-     *         "category.createdAt": null,
-     *         "category.updatedAt": null
-     *       }
-     *    ]
-     *  }
+     * "count": 1,
+     * "rows": [
+     *    {
+     *       "id": 1,
+     *       "name": "Java",
+     *       "categoryId": 0,
+     *       "createdAt": null,
+     *       "updatedAt": null,
+     *       "users.id": 1,
+     *       "users.firstName": "Admin",
+     *       "users.lastName": "Admin",
+     *       "users.email": "admin@gmail.com",
+     *       "users.description": "null",
+     *       "users.avatar": "user/avatar",
+     *       "users.createdAt": null,
+     *       "users.updatedAt": null,
+     *       "category.id": null,
+     *       "category.name": null,
+     *       "category.createdAt": null,
+     *       "category.updatedAt": null
+     *   }
+     *  ]
+     * }
      * @apiError Bad Request Wrong input data.
      *
      * @apiErrorExample Error-Response:

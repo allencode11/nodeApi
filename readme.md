@@ -37,7 +37,7 @@ sequelize db:migrate;
 sequelize db:seed:all;
 # run all seeds for populating the database
 ```
-Add a folder to the project and name it config. Create a javascript file named default with the db configurations for your user as in this example:
+Complete config/default.js.example with database account credentials as in the example:
 ```js
 module.exports.development = {
 username:  'mySqlAccountUsername',
@@ -47,7 +47,7 @@ host:  'localhost',
 dialect:  'mysql',
 };
 ``` 
-Then open the terminal and run:
+Then remove .example from the file name and open the terminal and run:
 ```js
 mysql -u username -p
 // replace username with your database account username

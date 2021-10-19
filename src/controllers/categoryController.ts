@@ -43,7 +43,6 @@ export class Categories {
 
     public static async getAll(req: PaginatedRequest, res: Response): Promise<Response> {
         try {
-
             const { limit, offset } = req.query;
 
             const {rows, count} = await Category.getAllPaginated({ limit, offset });
