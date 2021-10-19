@@ -5,7 +5,7 @@ import { Skill } from '../repositories';
 export class Skills {
 
     /**
-     * @api {get} /skill/:id Return a skills from the database
+     * @api {get} /skill/:id Get a skills from the database
      * @apiName find
      * @apiGroup Skill
      *
@@ -14,6 +14,7 @@ export class Skills {
      * {
      *   "count": 1,
      *   "rows": [
+<<<<<<< HEAD
      *     {
      *       "id": 3,
      *       "name": "EntityFramework",
@@ -35,6 +36,36 @@ export class Skills {
      *     }
      *   ]
      * }
+=======
+     *     {
+     *       "id": 3,
+     *       "name": "EntityFramework",
+     *       "categoryId": 2,
+     *       "createdAt": null,
+     *       "updatedAt": null,
+     *       "users.id": null,
+     *       "users.firstName": null,
+     *       "users.lastName": null,
+     *       "users.email": null,
+     *       "users.description": null,
+     *       "users.avatar": null,
+     *       "users.createdAt": null,
+     *       "users.updatedAt": null,
+     *       "category.id": 2,
+     *       "category.name": "Technologies",
+     *       "category.createdAt": null,
+     *       "category.updatedAt": null
+     *     }
+     *   ]
+     * }
+     * 
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 400 BadRequest
+     *     {
+     *           "message": "Bad request"
+     *   }
+     *
+>>>>>>> 8f66b8a (reseting project)
      */
     public static async find(req: RequestParam, res: Response): Promise<Response> {
        return res.json( await Skill.get(req.params.id));
@@ -132,7 +163,11 @@ export class Skills {
      * @apiParam {number} categoryId The id of the category.
      * 
      * @apiSuccessExample Success-Response:
+<<<<<<< HEAD
      *     HTTP/1.1 200 BadRequest
+=======
+     *     HTTP/1.1 200 Success
+>>>>>>> 8f66b8a (reseting project)
      *     {
      *           "message": "item was added"
      *     }
@@ -155,6 +190,30 @@ export class Skills {
         }
     };
 
+<<<<<<< HEAD
+=======
+    /**
+     * @api {post} /skill/:id Add a category to an user (via userId)
+     * @apiName post
+     * @apiGroup Skill
+     *
+     * @apiParam {number} skillId The id of the skill.
+     * 
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 Success
+     *     {
+     *           "message": "item was added"
+     *     }
+     *
+     * @apiError BadRequest Wrong input data.
+     *
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 400 BadRequest
+     *     {
+     *           "message": "Bad request"
+     *   }
+     */
+>>>>>>> 8f66b8a (reseting project)
     public static async postToUser(req: RequestParam, res: Response): Promise<Response> {
         try {
             await Skill.addSkillToUser(req.body.skillId, req.params.id);
@@ -167,7 +226,7 @@ export class Skills {
     /**
      * @api {delete} /skill/:id Delete a skill from an user
      * @apiName delete
-     * @apiGroup Skills
+     * @apiGroup Skill
      *
      * @apiParam {number} skillId The id of the skill to delete.
      *
@@ -197,7 +256,7 @@ export class Skills {
     /**
      * @api {delete} /skill/admin/:id Delete a skill from database
      * @apiName deleteFromDb
-     * @apiGroup Skills
+     * @apiGroup Skill
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 BadRequest

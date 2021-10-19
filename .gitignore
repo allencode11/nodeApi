@@ -1,4 +1,6 @@
 node_modules/
 .env
 dist
-.DB_store
+src/.DB_Store
+apidoc/
+config/default.js

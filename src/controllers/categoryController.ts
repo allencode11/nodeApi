@@ -5,7 +5,7 @@ import { Category } from '../repositories/categoryRepository';
 export class Categories {
 
     /**
-     * @api {get} /category Return all categories from the database
+     * @api {get} /category Get all categories from the database
      * @apiName getAll
      * @apiGroup Category
      *
@@ -65,7 +65,7 @@ export class Categories {
 
     
     /**
-     * @api {get} /category/:name Return a category from the database
+     * @api {get} /category/:id Get a category from the database
      * @apiName get
      * @apiGroup Category
      *
@@ -181,7 +181,7 @@ export class Categories {
      * @apiName update
      * @apiGroup Category
      *
-     * @apiParam {string} the new name of the category.
+     * @apiParam {string} name the new name of the category.
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 BadRequest
