@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "dokku": {
+            "postdeploy": "export NODE_ENV=development; npx sequelize-cli db:seed:all && npx sequelize-cli db:migrate"
+        }
+    }
+}

@@ -1,4 +1,4 @@
-const config = require('../config/default');
+const config = require('../config/default.js');
 
 const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 

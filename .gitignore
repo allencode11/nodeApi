@@ -1,6 +1,6 @@
 node_modules/
 .env
 dist
-src/.DB_Store
 apidoc/
 config/default.js
+.DS_Store
