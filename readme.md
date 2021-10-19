@@ -2,12 +2,12 @@
 
 Clone the repository if you have git installed on your machine:
 ```shell
-git clone https://github.com/allencode11/nodeApi
+git clone https://git.s4.smartdata.solutions/sergiu.manea/internship-nodejs-api.git
 # or
-git clone git@github.com:allencode11/nodeApi.git
+git clone git@git.s4.smartdata.solutions:sergiu.manea/internship-nodejs-api.git
 ```
 If you do not want to use git you can download the ZIP file from the link below:
-https://github.com/allencode11/nodeApi .
+https://git.s4.smartdata.solutions/sergiu.manea/internship-nodejs-api.git .
 
 # Install node and npm 
 Download node version for your system from the link below: https://nodejs.org/en/download/ .
