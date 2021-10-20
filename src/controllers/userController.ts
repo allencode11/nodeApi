@@ -52,9 +52,7 @@ export class Users {
 
     public static async getAll(req: PaginatedRequest, res: Response): Promise<Response> {
         try {
-
             const { limit, offset } = req.query;
-
             const {rows, count} = await User.getAllPaginated({ limit, offset });
 
             return res.status(200).json({
@@ -66,10 +64,7 @@ export class Users {
             });
         }
         catch (e) {
-            console.log(e);
-            return res.status(400).json({
-                message: 'Bad request',
-            });
+            return res.status(400).json({ message: 'Bad request' });
         };
     };
 
@@ -116,15 +111,13 @@ export class Users {
         try {
             const user = await User.getUser(req.params.id);
             
-            return res.json({
-                userdata: user,
-                // userSkills: skills,
-            });
+            if(user) {
+                return res.json({ userdata: user });
+            } else {
+                return res.json({ message: 'User was not found!'})
+            }; 
         } catch (e) {
-            console.log(e);
-            return res.json({
-                message: 'Bad request',
-            });
+            return res.json({ message: 'Bad request' });
         }
         
     };
@@ -156,8 +149,13 @@ export class Users {
      */
     public static async post(req: Request, res: Response): Promise<Response> {
         try {
-            const user = await User.addUser(req.body);
-            return res.status(200).json({message: 'user was added'});
+            const user = await User.getUser(req.body.name);
+            if(!user) {
+                await User.addUser(req.body);
+                return res.status(200).json({message: 'User was added'});
+            } else {
+                return res.status(400).json({message: 'User with this email already exist'});
+            }
         } catch (e) {
             return res.status(400).json({ message: 'Bad request'})
         }

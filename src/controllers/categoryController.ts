@@ -89,15 +89,15 @@ export class Categories {
 
     public static async get(req: RequestParam, res: Response): Promise<Response> {
         try {
-
             const item = await Category.get(req.params.id);
 
-            return res.status(200).json({
-                item,
-            });
+            if(item) {
+                return res.status(200).json({ item });
+            } else {
+                return res.status(404).json({ message: 'Category not found' });
+            }      
         }
         catch (e) {
-            console.log(e);
             return res.status(400).json({
                 message: 'Bad request',
             });
@@ -128,17 +128,14 @@ export class Categories {
 
     public static async add(req: RequestParam, res: Response): Promise<Response> {
         try {
-            const post = await Category.post(req.body.name);
-            
-            if( typeof(post) === 'string' ) {
-                return res.status(400).json({ message: 'item already exists'});
-            } else {
-                return res.status(200).json({ message: 'Category was added'})
+            if(await Category.getByName(req.body.name)) {
+                return res.status(406).json({ message: 'Item already exist'})
             }
+            const post = await Category.post(req.body.name);
+    
+            return res.status(200).json({ message: 'Category was added'})
         } catch (e) {
-            return res.status(400).json({
-                message: 'Bad request',
-            });
+            return res.status(400).json({ message: 'Bad request' });
         };
     };
 
@@ -164,12 +161,7 @@ export class Categories {
 
     public static async delete(req: RequestParam, res: Response): Promise<Response> {
         try {
-            const temp = Category.delete(req.params.id);
-            if(typeof(temp) === 'string') {
-                return res.status(400).json({ message: 'Category already exists'});
-            }
-            return res.status(200).json({ messaege: 'Category was deleted'});
-            
+            const temp = Category.delete(req.params.id);            
         } catch (e) {
             return res.status(404).json({ message: 'Item does not exist'});
         }
@@ -204,11 +196,18 @@ export class Categories {
      */
 
     public static async update(req: RequestParam, res: Response): Promise<Response> {
-        const obj = await Category.get(req.params.id);
+        const newName = req.body.name;
+        const id = req.params.id;
+
+        const obj = await Category.get(id);
         
         if (obj) {
-            await Category.put(req.body.name, req.params.id);
+            if(newName !== null || newName !== 'null'){
+                await Category.put(req.body.name, req.params.id);
             return res.status(200).json({ message: 'Item was updated' });
+            } else {
+                return res.status(406).json({ message: 'Null is not acceptable!'})
+            }   
         } else {
             return res.status(404).json({
                 message: 'Item was not found',

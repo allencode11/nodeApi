@@ -52,6 +52,21 @@ export class Category extends Model {
     });
   };
 
+  public static async getByName(name: string): Promise<Category> {
+    return this.findOne({
+      raw: true,
+      include: [
+        {
+          association: this.associations.skill,
+          attributes: [['id', 'name']],
+        },
+      ],
+      where: { 
+        name,
+      },    
+    });
+  };
+
   public static async delete(id: number): Promise<number | string> {
 
     try {
@@ -69,15 +84,7 @@ export class Category extends Model {
     return temp;
   };
 
-public static async post(nameObj: string): Promise<ICategory | string > {
-    const item = await this.findOne({ where: { name: nameObj } });
-    let message;
-    if (item) {
-      message = 'Item already exists';
-    } else {
+public static async post(nameObj: string): Promise<ICategory> {
       return this.create({ name: nameObj });
-    }
-
-    return message;
-  };
+};
 }

@@ -25,7 +25,7 @@ export class User extends Model {
   
   public static associate(models: SequelizeModels): void {
     User.belongsToMany(models.Skill, { through: 'user_skills' });
-  }
+  };
   
   public static async getAllPaginated(params: Params): Promise<{ rows: User[], count: number }> {
     const { limit, offset } = params;
@@ -42,7 +42,7 @@ export class User extends Model {
       ],
       order: [['id', 'asc']],
     });
-  }
+  };
 
   public static async addUser(obj: IUserData): Promise<[User, boolean ]> {
     const temp = this.findOrCreate({where: {email: obj.email}, defaults: obj});
@@ -62,7 +62,7 @@ export class User extends Model {
       avatar: obj.avatar,
       description: obj.description,
       email: obj.email }, { where: {id} });
-  }
+  };
 
   public static async getUser(id: number): Promise<User> {
     return this.findOne({
@@ -71,10 +71,24 @@ export class User extends Model {
       include: {
         association: this.associations.skill,
         attributes: ['id', 'name', 'categoryId'],
-        where: { userId: id },
+        where: { id },
         },
       where: { 
         id,
+      },    
+    });
+  };
+
+  public static async getUserByEmail(email: string): Promise<User> {
+    return this.findOne({
+      raw: true,
+      nest: true,
+      include: {
+        association: this.associations.skill,
+        attributes: ['id', 'name', 'categoryId'],
+        },
+      where: { 
+        email,
       },    
     });
   }
