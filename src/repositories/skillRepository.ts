@@ -1,12 +1,12 @@
 import { Category, User, UserSkills } from '../repositories';
-import { HasMany, Model } from 'sequelize';
+import { BelongsToMany, HasMany, Model } from 'sequelize';
 import { ISkillsData, IUserData, Params, SequelizeModels} from '../types';
 import { Users } from 'controllers';
 
 export class Skill extends Model {
   public static associations: {
     category: HasMany<Skill>,
-    users: HasMany<Skill>,
+    users: BelongsToMany<Skill>,
   };
   
   public id: number;
@@ -20,7 +20,7 @@ export class Skill extends Model {
   public readonly updatedAt!: Date;
   
   public static associate(models: SequelizeModels): void {
-    Skill.belongsTo(models.User, { foreignKey: 'id', as: 'users'});
+    Skill.belongsToMany(models.User, { through: 'user_skills' });
     Skill.belongsTo(models.Category, { foreignKey: 'categoryId', targetKey: 'id', as: 'category' });
   };
 

@@ -155,6 +155,7 @@ export class Skills {
 
     public static async post(req: Request, res: Response): Promise<Response> {
         try {
+            console.log(req.body);
             await Skill.addSkill(req.body)
             return res.status(200).json({ message: 'Item was added'}); 
         } catch (e) {

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "run test",
     "build": "tsc --build",
-    "start": "node dist"
+    "start": "tsc && node dist"
   },
   "repository": {
     "type": "git",

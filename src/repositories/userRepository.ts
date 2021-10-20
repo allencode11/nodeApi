@@ -1,9 +1,10 @@
-import { Model, HasMany } from 'sequelize';
+import { Skill } from 'repositories';
+import { Model, HasMany, BelongsTo, BelongsToMany } from 'sequelize';
 import { IUserData, Params, SequelizeModels } from '../types';
 
 export class User extends Model {
   public static associations: {
-    skill: HasMany<User>,
+    skill: BelongsToMany<User>,
   };
 
   public id!: number;
@@ -23,7 +24,7 @@ export class User extends Model {
   public readonly updatedAt!: Date;
   
   public static associate(models: SequelizeModels): void {
-    User.hasMany(models.Skill, { foreignKey: 'id', as: 'skill' });
+    User.belongsToMany(models.Skill, { through: 'user_skills' });
   }
   
   public static async getAllPaginated(params: Params): Promise<{ rows: User[], count: number }> {
@@ -36,7 +37,7 @@ export class User extends Model {
       include: [
         {
           association: this.associations.skill,
-          // attributes: ['skillId', 'name'],
+          attributes: [['id', 'name']],
         },
       ],
       order: [['id', 'asc']],
@@ -66,12 +67,12 @@ export class User extends Model {
   public static async getUser(id: number): Promise<User> {
     return this.findOne({
       raw: true,
-      include: [
-        {
-          association: this.associations.skill,
-          attributes: ['id', 'name'],
+      nest: true,
+      include: {
+        association: this.associations.skill,
+        attributes: ['id', 'name', 'categoryId'],
+        where: { userId: id },
         },
-      ],
       where: { 
         id,
       },    

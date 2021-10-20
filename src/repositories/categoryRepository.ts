@@ -43,7 +43,7 @@ export class Category extends Model {
       include: [
         {
           association: this.associations.skill,
-          attributes: ['id', 'name'],
+          attributes: [['id', 'name']],
         },
       ],
       where: { 

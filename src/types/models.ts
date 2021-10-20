@@ -40,5 +40,5 @@ export interface SequelizeModels {
   Category: typeof Category,
   User: typeof User,
   Skill: typeof Skill,
-  UserSkills: typeof UserSkills,
+  // UserSkills: typeof UserSkills,
 }

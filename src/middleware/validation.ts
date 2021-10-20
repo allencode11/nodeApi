@@ -50,14 +50,16 @@ export const validateUserId = async (req: RequestParam, res: Response, next: Nex
 
 
  export const validateSkillName= async (req: RequestParam, res: Response, next: NextFunction) => {
-    if (req.body.name === '' || req.body.name === '') {
+    const skill: Skill[] = req.body;
+    skill.forEach( async element => {
+        if (element.name === '' || element.name === '') {
         return res.send(400).json({ message: 'Internal server error! Field can not be null!' });
-    }
-    if (await Skill.findOne({ where: { name: req.body.name }})) {
-        res.send(500).json({ message: 'Internal server error! A skill with this name already exist!' })
-   } else {
-        next();
-   }
+        }
+        if (await Skill.findOne({ where: { name: req.body.name }})) {
+            res.send(500).json({ message: 'Internal server error! A skill with this name already exist!' })
+        }
+    });
+    next();  
  };
 
 

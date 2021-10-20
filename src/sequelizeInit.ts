@@ -19,7 +19,7 @@ const models: SequelizeModels = {
     Category: categoryModel,
     User: userModel,
     Skill: skillModel,
-    UserSkills: userSkills,
+   // UserSkills: userSkills,
 };
 
 Object.keys(models).forEach((name: string) => {
