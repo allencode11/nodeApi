@@ -6,6 +6,6 @@ dotenv.config();
 
 const port = process.env.PORT || 8000;
 
-app.listen('0.0.0.0:' + port, () => {
+app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
