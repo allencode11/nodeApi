@@ -3,6 +3,14 @@ name: internship-nodejs-api
 type: docker
 
 steps:
+  - name: prepare-build
+    image: node:14
+    environment:
+      APP_DB_CONFIG:
+        from_secret: APP_DB_CONFIG
+    commands:
+      - echo "$APP_DB_CONFIG" > config/default.js
+
   - name: dokku-deploy
     image: dokku/ci-docker-image
     environment:
