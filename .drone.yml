@@ -3,7 +3,7 @@ name: internship-nodejs-api
 type: docker
 
 steps:
-- name: dokku-deploy
+  - name: dokku-deploy
     image: dokku/ci-docker-image
     environment:
       SSH_PRIVATE_KEY:
