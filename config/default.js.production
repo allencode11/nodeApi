@@ -1,0 +1,15 @@
+module.exports.development = {
+  username: 'mysql',
+  password: '7123aff4965b6228',
+  database: 'internship_nodejs_api',
+  host: 'dokku-mysql-internship-nodejs-api',
+  dialect: 'mysql',
+};
+
+module.exports.production = {
+  username: 'mysql',
+  password: '7123aff4965b6228',
+  database: 'internship_nodejs_api',
+  host: 'dokku-mysql-internship-nodejs-api',
+  dialect: 'mysql',
+};
