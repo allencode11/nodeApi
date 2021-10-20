@@ -9,19 +9,19 @@ module.exports = {
       },
       {
         userId: 1,
+        skillId: 2,
+      },
+      {
+        userId: 1,
+        skillId: 3,
+      },
+      {
+        userId: 2,
         skillId: 1,
       },
       {
-        userId: 1,
-        skillId: 0,
-      },
-      {
-        userId: 1,
-        skillId: 2,
-      },
-      {
-        userId: 1,
-        skillId: 2,
+        userId: 2,
+        skillId: 4,
       }
     ], {});
   },

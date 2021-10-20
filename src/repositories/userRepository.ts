@@ -43,8 +43,10 @@ export class User extends Model {
     });
   }
 
-  public static async addUser(obj: IUserData): Promise<User> {
-    return this.create(obj);
+  public static async addUser(obj: IUserData): Promise<[User, boolean ]> {
+    const temp = this.findOrCreate({where: {email: obj.email}, defaults: obj});
+
+    return temp;
   };
   
 
