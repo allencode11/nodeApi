@@ -1,0 +1,7 @@
+module.exports.development = {
+username:  'mySqlAccountUsername',
+password:  'mySqlAccountPassword',
+database:  'mySqlDatabaseName',
+host:  'localhost',
+dialect:  'mysql',
+};

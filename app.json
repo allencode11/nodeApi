@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "dokku": {
+            "predeploy": "cd /app && cp config/default.js.production config/default.js",
+            "postdeploy": "export NODE_ENV=development; npx sequelize-cli db:migrate"
+        }
+    }
+}

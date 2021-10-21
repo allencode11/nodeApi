@@ -1,4 +1,4 @@
-import { Category, Skill, User } from '../repositories';
+import { Category, Skill, User, UserSkills } from '../repositories';
 
 export interface ICategoryData {
   name: string,
@@ -40,4 +40,5 @@ export interface SequelizeModels {
   Category: typeof Category,
   User: typeof User,
   Skill: typeof Skill,
+  UserSkills: typeof UserSkills,
 }

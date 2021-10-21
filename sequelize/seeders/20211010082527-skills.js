@@ -5,23 +5,23 @@ module.exports = {
     await queryInterface.bulkInsert('skills', [
       {
         name: 'Java',
-        categoryId: 0,
-      },
-      {
-        name: 'NodeJs',
         categoryId: 1,
       },
       {
-        name: 'EntityFramework',
-        categoryId: 2,
-      },
-      {
-        name: 'English',
+        name: 'NodeJs',
         categoryId: 3,
       },
       {
+        name: 'EntityFramework',
+        categoryId: 3,
+      },
+      {
+        name: 'English',
+        categoryId: 1,
+      },
+      {
         name: 'JavaScript',
-        categoryId: 0,
+        categoryId: 1,
       }
     ], {});
   },

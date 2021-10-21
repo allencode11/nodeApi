@@ -1,3 +1,4 @@
+import e from 'express';
 import { HasOne, Model, HasMany, Op } from 'sequelize';
 import { ICategory, Params, SequelizeModels } from '../types';
 
@@ -15,12 +16,6 @@ export class Category extends Model {
 
   public readonly updatedAt!: Date;
 
-  // Category.hasMany(models.Skill, {foreignKey: 'categoryId', sourceKey: 'id'});
-  // Skill.belongsTo(Category, {foreignKey: 'categoryId', targetKey: 'id'});
-
-  // Skill.belongsToMany(User, {through: 'userId'});
-  // User.belongsToMany(Skill, {through: 'userID'});
-  
   public static associate(models: SequelizeModels): void {
     Category.hasMany(models.Skill, {foreignKey: 'categoryId', sourceKey: 'id', as: 'skill'});
   };
@@ -32,23 +27,38 @@ export class Category extends Model {
       raw: true,
       offset,
       limit,
-      include: [
-        {
-          association: this.associations.skill,
-          attributes: ['id', 'name'],
-        },
-      ],
+      // include: [
+      //   {
+      //     association: this.associations.skill,
+      //     attributes: ['id', 'name'],
+      //   },
+      // ],
       order: [['id', 'asc']],
     });
   }
 
-  public static async get(name: string): Promise<Category> {
+  public static async get(id: number): Promise<Category> {
     return this.findOne({
       raw: true,
       include: [
         {
           association: this.associations.skill,
-          attributes: ['id', 'name'],
+          attributes: [['id', 'name']],
+        },
+      ],
+      where: { 
+        id,
+      },    
+    });
+  };
+
+  public static async getByName(name: string): Promise<Category> {
+    return this.findOne({
+      raw: true,
+      include: [
+        {
+          association: this.associations.skill,
+          attributes: [['id', 'name']],
         },
       ],
       where: { 
@@ -57,9 +67,15 @@ export class Category extends Model {
     });
   };
 
-  public static async delete(name: string): Promise<number> {
+  public static async delete(id: number): Promise<number | string> {
 
-    return this.destroy({ where: { name } });
+    try {
+      const temp = await this.findByPk(id);
+      return await this.destroy({ where: { id } });
+    } catch (e) {
+      return 'error';
+    }
+    
   };
 
   public static async put(nameObj: string, id: number): Promise<[number, Category[]]> {
@@ -68,8 +84,7 @@ export class Category extends Model {
     return temp;
   };
 
-  public static async post(nameObj: string): Promise<ICategory> {
-    
-    return this.create({ name: nameObj });
-  };
+public static async post(nameObj: string): Promise<ICategory> {
+      return this.create({ name: nameObj });
+};
 }

@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import passport from 'passport';
-import { isLoggedIn } from '../middleware';
 
 export const authRouter = express.Router();
 
@@ -10,4 +9,4 @@ authRouter
     console.log(req.query);
     const { code } = req.query;
   })
-  .get('/logout', isLoggedIn);
+  .get('/logout');

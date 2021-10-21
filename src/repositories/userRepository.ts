@@ -1,12 +1,12 @@
-import { Model, HasMany } from 'sequelize';
+import { Model, HasMany} from 'sequelize';
 import { IUserData, Params, SequelizeModels } from '../types';
 
 export class User extends Model {
   public static associations: {
-    skill: HasMany<User>,
+    userSkills: HasMany<User>,
   };
 
-  public userId!: number;
+  public id!: number;
   
   public firstName!: string;
   
@@ -21,14 +21,10 @@ export class User extends Model {
   public readonly createdAt!: Date;
 
   public readonly updatedAt!: Date;
-
-  // through: 'writer_of_project'
-  // foreign-key: 'user'
-  // as: 'projects'
   
   public static associate(models: SequelizeModels): void {
-    User.belongsToMany(models.Skill, { through: 'userId', as: 'skill'});
-  }
+    User.hasMany(models.UserSkills, { foreignKey: 'userId', sourceKey: 'id', as: 'userSkills' });  
+  };
   
   public static async getAllPaginated(params: Params): Promise<{ rows: User[], count: number }> {
     const { limit, offset } = params;
@@ -39,16 +35,18 @@ export class User extends Model {
       limit,
       include: [
         {
-          association: this.associations.skill,
-          attributes: ['id', 'name'],
+          association: this.associations.userSkills,
+          attributes: [['id', 'name']],
         },
       ],
       order: [['id', 'asc']],
     });
-  }
+  };
 
-  public static async addUser(obj: IUserData): Promise<User> {
-    return this.create(obj);
+  public static async addUser(obj: IUserData): Promise<[User, boolean ]> {
+    const temp = this.findOrCreate({where: {email: obj.email}, defaults: obj});
+
+    return temp;
   };
   
 
@@ -63,19 +61,32 @@ export class User extends Model {
       avatar: obj.avatar,
       description: obj.description,
       email: obj.email }, { where: {id} });
-  }
+  };
 
-  public static async getUser(id: number): Promise<User> {
-    return this.findOne({
+  public static async getUser(id: number): Promise<{ rows: User[], count: number }> {
+    return this.findAndCountAll({
       raw: true,
-      include: [
-        {
-          association: this.associations.skill,
-          attributes: ['id', 'name'],
+      nest: true,
+      include: {
+        association: this.associations.userSkills,
+        attributes: ['skillId'],
         },
-      ],
       where: { 
         id,
+      },    
+    });
+  };
+
+  public static async getUserByEmail(email: string): Promise<User> {
+    return this.findOne({
+      raw: true,
+      nest: true,
+      include: {
+        association: this.associations.userSkills,
+        attributes: ['id', 'name', 'categoryId'],
+        },
+      where: { 
+        email,
       },    
     });
   }

@@ -4,19 +4,17 @@ const { DataTypes } = require ('sequelize');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('skills', {
-      id: { 
-        type: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
       },
       name: {
-          field: 'name',
           type: DataTypes.STRING,
           allowNull: false,
       },
       categoryId: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
+        type: DataTypes.INTEGER.UNSIGNED,
       },
       createdAt: {
         type: Sequelize.DATE,

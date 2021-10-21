@@ -4,7 +4,7 @@ import { PaginatedRequest, RequestParam } from '../types';
 
 export class Users {
     /**
-     * @api {get} /category Return all categories from the database
+     * @api {get} /user Get all users from the database
      * @apiName getAll
      * @apiGroup Users
      *
@@ -52,9 +52,7 @@ export class Users {
 
     public static async getAll(req: PaginatedRequest, res: Response): Promise<Response> {
         try {
-
             const { limit, offset } = req.query;
-
             const {rows, count} = await User.getAllPaginated({ limit, offset });
 
             return res.status(200).json({
@@ -67,50 +65,40 @@ export class Users {
         }
         catch (e) {
             console.log(e);
-            return res.status(400).json({
-                message: 'Bad request',
-            });
+            return res.status(400).json({ message: 'Bad request' });
         };
     };
 
     /**
-     * @api {get} /user/:id Return all user's data from the database
+     * @api {get} /user/:id Get all user's data from the database
      * @apiName get
      * @apiGroup Users
      *
-     * @apiParam {number} limit The number of items for paginations.
-     * @apiParam {number} offset Page for json.
-     *
      * @apiSuccessExample Success-Response:
-     *    [
-     *      {
-     *           "id": 4,
-     *           "firstName": "Alina",
-     *           "lastName": "Enache",
-     *           "email": "al.el.en.lina@gmail.com",
-     *           "description": "client",
-     *           "avatar": "user/avatar1",
-     *           "createdAt": null,
-     *           "updatedAt": null
-     *       },
-     *       [
-     *          {
-     *              "id": 2,
-     *              "name": "Sql",
-     *              "createdAt": null,
-     *              "updatedAt": null,
-     *              "categoryId": 0
-     *          },
-     *          {  
-     *              "id": 3,
-     *              "name": "Js",
-     *              "createdAt": null,
-     *              "updatedAt": null,
-     *              "categoryId": 1
-     *          }
-     *      ]
-     *   ]
-     *
+     * {
+     * "count": 1,
+     * "rows": [
+     *    {
+     *       "id": 1,
+     *       "name": "Java",
+     *       "categoryId": 0,
+     *       "createdAt": null,
+     *       "updatedAt": null,
+     *       "users.id": 1,
+     *       "users.firstName": "Admin",
+     *       "users.lastName": "Admin",
+     *       "users.email": "admin@gmail.com",
+     *       "users.description": "null",
+     *       "users.avatar": "user/avatar",
+     *       "users.createdAt": null,
+     *       "users.updatedAt": null,
+     *       "category.id": null,
+     *       "category.name": null,
+     *       "category.createdAt": null,
+     *       "category.updatedAt": null
+     *   }
+     *  ]
+     * }
      * @apiError Bad Request Wrong input data.
      *
      * @apiErrorExample Error-Response:
@@ -123,22 +111,15 @@ export class Users {
     public static async get(req: RequestParam, res: Response): Promise<Response> {
         try {
             const user = await User.getUser(req.params.id);
-            // const skillsIds = await UserSkills.getSkillsByUserId(req.params.id);
-            // const skills: string[] = [];
-
-            // skillsIds.forEach(async (element) => {
-            //     const temp = await Skill.findByPk(element);
-            //     skills.push(temp.name);
-            // });
-            return res.json({
-                userdata: user,
-                // userSkills: skills,
-            });
+            
+            if(user) {
+                return res.json({ userdata: user });
+            } else {
+                return res.json({ message: 'User was not found!'})
+            }; 
         } catch (e) {
             console.log(e);
-            return res.json({
-                message: 'Bad request',
-            });
+            return res.json({ message: 'Bad request' });
         }
         
     };
@@ -152,7 +133,7 @@ export class Users {
      * @apiParam {string} lastName User's last name.
      * @apiParam {string} email  User's email.
      * @apiParam {string} description  A short section about the User.
-     * @apiParam {avatar} email  Path for the User's photo.
+     * @apiParam {avatar} avatar  Path for the User's photo.
      * 
      * @apiSuccessExample Success-Response:
      *    
@@ -170,10 +151,14 @@ export class Users {
      */
     public static async post(req: Request, res: Response): Promise<Response> {
         try {
-            await User.addUser(req.body);
-            return res.status(200).json({message: 'user was created'});
+            const user = await User.getUser(req.body.name);
+            if(!user) {
+                await User.addUser(req.body);
+                return res.status(200).json({message: 'User was added'});
+            } else {
+                return res.status(400).json({message: 'User with this email already exist'});
+            }
         } catch (e) {
-            console.error(e);
             return res.status(400).json({ message: 'Bad request'})
         }
     };
@@ -199,7 +184,7 @@ export class Users {
      *   }
      */
     public static async delete(req: RequestParam, res: Response): Promise<Response> {
-        if (User.getUser(req.params.id)) {
+        if (await User.getUser(req.params.id)) {
             await User.deleteUser(req.params.id);
             return res.status(200).json({ message: 'User was deleted'});
         } else {
@@ -216,29 +201,28 @@ export class Users {
      * @apiParam {string} lastName User's new last name.
      * @apiParam {string} email  User's new email.
      * @apiParam {string} description  A new short section about the User.
-     * @apiParam {avatar} email  New path for the User's photo.
+     * @apiParam {avatar} avatar  New path for the User's photo.
      * 
      * @apiSuccessExample Success-Response:
      *    
      * {
-     *     "message": "user was deleted"
+     *     "message": "user was edited succesfully"
      * }
      *
      * @apiError NotFound Wrong input data.
      *
      * @apiErrorExample Error-Response:
-     *     HTTP/1.1 404 NotFound
+     *     HTTP/1.1 400 BadRequest
      *     {
-     *           "message": "User does not exist"
+     *           "message": "Bad request
      *   }
      */
     public static async put(req: RequestParam, res: Response): Promise<Response> {
-        if (User.getUser(req.params.id)) {
+        if (await User.getUser(req.params.id)) {
             try {
                 await User.editUser(req.body, req.params.id);
                 return res.status(200).json({message: 'user was edited sucessfully'});
             } catch (e) {
-                console.log(e);
                 return res.send(400).json({ message: 'bed request'});
             }
         } else {

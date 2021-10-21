@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
-import { PaginatedRequest } from '../types';
+import { Response } from 'express';
+import { PaginatedRequest, RequestParam } from '../types';
 import { Category } from '../repositories/categoryRepository';
 
 export class Categories {
 
     /**
-     * @api {get} /category Return all categories from the database
+     * @api {get} /category Get all categories from the database
      * @apiName getAll
      * @apiGroup Category
      *
@@ -43,7 +43,6 @@ export class Categories {
 
     public static async getAll(req: PaginatedRequest, res: Response): Promise<Response> {
         try {
-
             const { limit, offset } = req.query;
 
             const {rows, count} = await Category.getAllPaginated({ limit, offset });
@@ -65,7 +64,7 @@ export class Categories {
 
     
     /**
-     * @api {get} /category/:name Return a category from the database
+     * @api {get} /category/:id Get a category from the database
      * @apiName get
      * @apiGroup Category
      *
@@ -88,17 +87,17 @@ export class Categories {
      *   }
      */
 
-    public static async get(req: Request, res: Response): Promise<Response> {
+    public static async get(req: RequestParam, res: Response): Promise<Response> {
         try {
+            const item = await Category.get(req.params.id);
 
-            const item = await Category.get(req.params.name);
-
-            return res.status(200).json({
-                item,
-            });
+            if(item) {
+                return res.status(200).json({ item });
+            } else {
+                return res.status(404).json({ message: 'Category not found' });
+            }      
         }
         catch (e) {
-            console.log(e);
             return res.status(400).json({
                 message: 'Bad request',
             });
@@ -127,23 +126,23 @@ export class Categories {
      *   }
      */
 
-    public static async add(req: Request, res: Response): Promise<Response> {
+    public static async add(req: RequestParam, res: Response): Promise<Response> {
         try {
-            await Category.post(req.body.name);
-            return res.status(200).json({ message: 'Category was added'});
+            if(await Category.getByName(req.body.name)) {
+                return res.status(406).json({ message: 'Item already exist'})
+            }
+            const post = await Category.post(req.body.name);
+    
+            return res.status(200).json({ message: 'Category was added'})
         } catch (e) {
-            return res.status(400).json({
-                message: 'Bad request',
-            });
+            return res.status(400).json({ message: 'Bad request' });
         };
     };
 
     /**
-     * @api {delete} /category Delete a category from the db
+     * @api {delete} /category/:id Delete a category from the db
      * @apiName delete
      * @apiGroup Category
-     *
-     * @apiParam {string} the name of the new category.
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 BadRequest
@@ -160,21 +159,20 @@ export class Categories {
      *   }
      */
 
-    public static async delete(req: Request, res: Response): Promise<Response> {
-        if (Category.findAll({ where: {name: req.params.name}})) {
-            await Category.delete(req.params.name);
-            return res.status(200).json({ messaege: 'Category was deleted'});
-        } else {
+    public static async delete(req: RequestParam, res: Response): Promise<Response> {
+        try {
+            const temp = Category.delete(req.params.id);            
+        } catch (e) {
             return res.status(404).json({ message: 'Item does not exist'});
         }
     };
 
     /**
-     * @api {put} /category/:name Update a category from the db
+     * @api {put} /category/:id Update a category from the db
      * @apiName update
      * @apiGroup Category
      *
-     * @apiParam {string} the new name of the category.
+     * @apiParam {string} name the new name of the category.
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 BadRequest
@@ -197,20 +195,23 @@ export class Categories {
      *     }
      */
 
-    public static async update(req: Request, res: Response): Promise<Response> {
-        const obj = await Category.get(req.params.name);
+    public static async update(req: RequestParam, res: Response): Promise<Response> {
+        const newName = req.body.name;
+        const id = req.params.id;
+
+        const obj = await Category.get(id);
         
         if (obj) {
-            await Category.put(req.body.name, obj.id);
-        return res.status(200).json({mesage: 'Item was updated'});
+            if(newName !== null || newName !== 'null'){
+                await Category.put(req.body.name, req.params.id);
+            return res.status(200).json({ message: 'Item was updated' });
+            } else {
+                return res.status(406).json({ message: 'Null is not acceptable!'})
+            }   
         } else {
             return res.status(404).json({
                 message: 'Item was not found',
             });
         }
-
-        return res.status(400).json({
-            message: 'Bad request',
-        });
     };
 }
