@@ -64,6 +64,7 @@ export class Users {
             });
         }
         catch (e) {
+            console.log(e);
             return res.status(400).json({ message: 'Bad request' });
         };
     };
@@ -117,6 +118,7 @@ export class Users {
                 return res.json({ message: 'User was not found!'})
             }; 
         } catch (e) {
+            console.log(e);
             return res.json({ message: 'Bad request' });
         }
         

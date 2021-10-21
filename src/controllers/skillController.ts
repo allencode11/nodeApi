@@ -44,12 +44,14 @@ export class Skills {
      *
      */
     public static async find(req: RequestParam, res: Response): Promise<Response> {
-       return res.json( await Skill.get(req.params.id));
-    }
+       const skill = await Skill.get(req.params.id);
 
-    public static async getIdByName(req: RequestParam, res: Response): Promise<Response> {
-        return res.json( await Skill.getIdByName(req.params.name));
-     }
+       if(skill) {
+           return res.status(200).json(skill);
+       }
+
+       return res.status(404).json({ message: 'Skill not found' });
+    }
 
     /**
      * @api {get} /skill Return all skills from the database
@@ -124,6 +126,8 @@ export class Skills {
             });
         }
         catch (e) {
+            console.log(e);
+            
             return res.status(400).json({
                 message: 'Bad request',
             });
@@ -155,7 +159,6 @@ export class Skills {
 
     public static async post(req: Request, res: Response): Promise<Response> {
         try {
-            console.log(req.body);
             await Skill.addSkill(req.body)
             return res.status(200).json({ message: 'Item was added'}); 
         } catch (e) {

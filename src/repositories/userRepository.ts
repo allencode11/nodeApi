@@ -1,10 +1,9 @@
-import { Skill } from 'repositories';
-import { Model, HasMany, BelongsTo, BelongsToMany } from 'sequelize';
+import { Model, HasMany} from 'sequelize';
 import { IUserData, Params, SequelizeModels } from '../types';
 
 export class User extends Model {
   public static associations: {
-    skill: BelongsToMany<User>,
+    userSkills: HasMany<User>,
   };
 
   public id!: number;
@@ -24,7 +23,7 @@ export class User extends Model {
   public readonly updatedAt!: Date;
   
   public static associate(models: SequelizeModels): void {
-    User.belongsToMany(models.Skill, { through: 'user_skills' });
+    User.hasMany(models.UserSkills, { foreignKey: 'userId', sourceKey: 'id', as: 'userSkills' });  
   };
   
   public static async getAllPaginated(params: Params): Promise<{ rows: User[], count: number }> {
@@ -36,7 +35,7 @@ export class User extends Model {
       limit,
       include: [
         {
-          association: this.associations.skill,
+          association: this.associations.userSkills,
           attributes: [['id', 'name']],
         },
       ],
@@ -64,14 +63,13 @@ export class User extends Model {
       email: obj.email }, { where: {id} });
   };
 
-  public static async getUser(id: number): Promise<User> {
-    return this.findOne({
+  public static async getUser(id: number): Promise<{ rows: User[], count: number }> {
+    return this.findAndCountAll({
       raw: true,
       nest: true,
       include: {
-        association: this.associations.skill,
-        attributes: ['id', 'name', 'categoryId'],
-        where: { id },
+        association: this.associations.userSkills,
+        attributes: ['skillId'],
         },
       where: { 
         id,
@@ -84,7 +82,7 @@ export class User extends Model {
       raw: true,
       nest: true,
       include: {
-        association: this.associations.skill,
+        association: this.associations.userSkills,
         attributes: ['id', 'name', 'categoryId'],
         },
       where: { 

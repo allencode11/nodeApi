@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import { RequestParam } from '../types';
-import { User, Category, Skill } from '../repositories';
+import { Skill } from '../repositories';
 
 
  export const validateEmail = async (req: RequestParam, res: Response, next: NextFunction) => {

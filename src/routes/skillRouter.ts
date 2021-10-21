@@ -1,15 +1,14 @@
 import express from 'express';
-import { isPaginated, validateSkillId, validateUserSkillId, validateUserId, validateSkillName } from '../middleware';
+import { isPaginated, validateSkillName } from '../middleware';
 import { Skills } from '../controllers';
 
 export const skillRouter = express.Router();
 
 skillRouter
-  .get('/:id', validateSkillId, Skills.find)
-  .get('/admin/:name', Skills.getIdByName)
+  .get('/:id', Skills.find)
   .get('/', isPaginated, Skills.getAll)
-  .delete('/:id', validateSkillId, Skills.delete)
-  .delete('/admin/:id', validateSkillId, Skills.deleteFromDb)
+  .delete('/:id', Skills.delete)
+  .delete('/admin/:id', Skills.deleteFromDb)
   .post('/', validateSkillName, Skills.post)
-  .post('/:id', validateUserSkillId, validateUserId,  Skills.postToUser);
+  .post('/:id',  Skills.postToUser);
  // .put('/:id', Skills.edit);

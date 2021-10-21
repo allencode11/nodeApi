@@ -1,12 +1,11 @@
 import { Category, User, UserSkills } from '../repositories';
 import { BelongsToMany, HasMany, Model } from 'sequelize';
 import { ISkillsData, IUserData, Params, SequelizeModels} from '../types';
-import { Users } from 'controllers';
 
 export class Skill extends Model {
   public static associations: {
     category: HasMany<Skill>,
-    users: BelongsToMany<Skill>,
+    userSkills: HasMany<Skill>,
   };
   
   public id: number;
@@ -20,7 +19,7 @@ export class Skill extends Model {
   public readonly updatedAt!: Date;
   
   public static associate(models: SequelizeModels): void {
-    Skill.belongsToMany(models.User, { through: 'user_skills' });
+    Skill.hasMany(models.UserSkills, { foreignKey: 'skillId', sourceKey: 'id', as: 'userSkills' });
     Skill.belongsTo(models.Category, { foreignKey: 'categoryId', targetKey: 'id', as: 'category' });
   };
 
@@ -34,10 +33,11 @@ export class Skill extends Model {
       include: [
         {
           association: this.associations.category,
-          attributes: ['id', 'name'],
+          attributes: ['name'],
         },
         {
-          association: this.associations.users,
+          association: this.associations.userSkills,
+          attributes: ['userId'],
         },
       ],
       order: [['id', 'asc']],
@@ -50,16 +50,24 @@ export class Skill extends Model {
     return skill.name;
   }
 
-  public static async get(id: number): Promise< { rows: Category[], count: number }> {
+  public static async get(id: number): Promise< { rows: Skill[], count: number }> {
 
+    const user = this.findAndCountAll({
+      raw: true,
+      where: { id },
+    });
+
+    const skills = this.associations.userSkills
     return this.findAndCountAll({
       raw: true,
       include: [
         {
-          association: this.associations.users,
+          association: this.associations.userSkills,
+          attributes: ['userId'],
         },
         {
           association: this.associations.category,
+          attributes: ['name'],
         },
       ],
       where: { id },
