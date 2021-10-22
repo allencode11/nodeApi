@@ -25,6 +25,7 @@ export interface IUserData {
   email: string,
   avatar: string,
   description:string,
+  skills: UserSkills[],
 };
 
 export interface ISearchData {

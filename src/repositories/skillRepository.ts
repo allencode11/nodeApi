@@ -1,6 +1,8 @@
 import { Category, User, UserSkills } from '../repositories';
 import { BelongsToMany, HasMany, Model } from 'sequelize';
 import { ISkillsData, IUserData, Params, SequelizeModels} from '../types';
+import { json } from 'sequelize';
+import { Users } from 'controllers';
 
 export class Skill extends Model {
   public static associations: {
@@ -26,6 +28,28 @@ export class Skill extends Model {
   public static async getAllPaginated(params: Params): Promise<{ rows: Skill[], count: number }> {
     const { limit, offset } = params;
 
+    const skills = await this.findAndCountAll({
+      raw: true,
+      offset,
+      limit,
+      order: [['id', 'asc']],
+    });
+
+    const users = [];
+
+    skills.rows.forEach(async element => {
+      users.push(await UserSkills.findAll({ 
+        raw: true, 
+        where: { userId: element.id }, 
+        attributes: ['userId'], 
+      }));
+    });
+
+    const responseData = [];
+
+    for(const property in skills) {
+      responseData.push(skills);
+    }
     return this.findAndCountAll({
       raw: true,
       offset,
@@ -50,30 +74,27 @@ export class Skill extends Model {
     return skill.name;
   }
 
-  public static async get(id: number): Promise< { rows: Skill[], count: number }> {
+  public static async get(id: number): Promise<Skill> {
 
-    const user = this.findAndCountAll({
+    const skill = this.findOne({
       raw: true,
       where: { id },
     });
 
-    const skills = this.associations.userSkills
-    return this.findAndCountAll({
-      raw: true,
-      include: [
-        {
-          association: this.associations.userSkills,
-          attributes: ['userId'],
-        },
-        {
-          association: this.associations.category,
-          attributes: ['name'],
-        },
-      ],
-      where: { id },
-    });
+    return skill;
   }
   
+  public static async getUsers(id: number): Promise<Users> {
+
+  const users = UserSkills.findAll({
+    raw: true,
+    where: { skillId: id },
+    attributes: ['userId'],
+  });
+  return users;
+
+  };
+
   public static async addSkill(skill: ISkillsData[]): Promise<[Skill, boolean]> {  
     let tempSkill;
     

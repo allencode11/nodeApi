@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserSkills, User, Skill } from '../repositories';
-import { PaginatedRequest, RequestParam } from '../types';
+import { IUserData, PaginatedRequest, RequestParam } from '../types';
 
 export class Users {
     /**
@@ -110,10 +110,23 @@ export class Users {
 
     public static async get(req: RequestParam, res: Response): Promise<Response> {
         try {
-            const user = await User.getUser(req.params.id);
-            
+            const skills = await User.getUserSkills(req.params.id);
+            const user= await User.getUser(req.params.id);
+
             if(user) {
-                return res.json({ userdata: user });
+                const responseData: IUserData = {
+                    firstName: user.firstName,
+                    email: user.email,
+                    lastName:user.lastName,
+                    description: user.description,
+                    avatar: user.avatar,
+                    skills: [],
+                }
+
+                skills.forEach( element => {
+                    responseData.skills.push(element);
+                })
+                return res.json({ responseData });
             } else {
                 return res.json({ message: 'User was not found!'})
             }; 
