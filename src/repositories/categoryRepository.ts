@@ -6,7 +6,6 @@ export class Category extends Model {
   public static associations: {
     skill: HasOne<Category>,
     };
-  
 
   public id!: number;
   

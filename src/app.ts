@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import { userRouter, categoryRouter, skillRouter } from './routes';
 import { sequelizeClient } from './sequelizeInit';
 import cors from 'cors';
+
 const app = express();
 app.use(cors());
 app.use(morgan('dev'));

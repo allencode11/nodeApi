@@ -44,13 +44,14 @@ export class Skills {
      *
      */
     public static async find(req: RequestParam, res: Response): Promise<Response> {
-       const skill = await Skill.get(req.params.id);
+        const skill = await Skill.get(req.params.id);
+        const users = await Skill.getUsers(req.params.id);
 
-       if(skill) {
-           return res.status(200).json(skill);
-       }
+        if(skill) {
+            return res.status(200).json({ skill, users });
+        }
 
-       return res.status(404).json({ message: 'Skill not found' });
+        return res.status(404).json({ message: 'Skill not found' });
     }
 
     /**
