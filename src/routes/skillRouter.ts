@@ -11,4 +11,3 @@ skillRouter
   .delete('/admin/:id', Skills.deleteFromDb)
   .post('/', validateSkillName, Skills.post)
   .post('/:id',  Skills.postToUser);
- // .put('/:id', Skills.edit);
