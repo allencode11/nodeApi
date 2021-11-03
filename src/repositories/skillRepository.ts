@@ -28,28 +28,6 @@ export class Skill extends Model {
   public static async getAllPaginated(params: Params): Promise<{ rows: Skill[], count: number }> {
     const { limit, offset } = params;
 
-    const skills = await this.findAndCountAll({
-      raw: true,
-      offset,
-      limit,
-      order: [['id', 'asc']],
-    });
-
-    const users = [];
-
-    skills.rows.forEach(async element => {
-      users.push(await UserSkills.findAll({ 
-        raw: true, 
-        where: { userId: element.id }, 
-        attributes: ['userId'], 
-      }));
-    });
-
-    const responseData = [];
-
-    for(const property in skills) {
-      responseData.push(skills);
-    }
     return this.findAndCountAll({
       raw: true,
       offset,
